@@ -6,7 +6,7 @@ using UnityEngine;
 public class MovementLooking : MonoBehaviour
 {
     // Public editable Variables
-    public new Camera camera;
+    public GameObject head;
     public CharacterController controller;
 
 
@@ -34,6 +34,7 @@ public class MovementLooking : MonoBehaviour
         velocity = Vector3.zero;
     }
 
+
     private void OnEnable() => controls.Player.Enable();
     private void OnDisable() => controls.Player.Disable();
     
@@ -54,7 +55,7 @@ public class MovementLooking : MonoBehaviour
         // Camera Rotation UP/DOWN
         this.xRotation -= deltaMouse.y;
         this.xRotation = Mathf.Clamp(this.xRotation, -90f, 90f);
-        camera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        head.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
     }
 
     public void Jump()
