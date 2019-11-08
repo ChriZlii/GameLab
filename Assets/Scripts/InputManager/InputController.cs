@@ -65,6 +65,14 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""SwitchWeapons"",
+                    ""type"": ""Button"",
+                    ""id"": ""6f525ea2-886d-4252-820c-c3d5ad4e7920"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -232,6 +240,17 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""action"": ""Scope"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3fdc096f-c8e8-4f20-bcd1-f82260de8f73"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeapons"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -263,6 +282,7 @@ public class @InputController : IInputActionCollection, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Scope = m_Player.FindAction("Scope", throwIfNotFound: true);
+        m_Player_SwitchWeapons = m_Player.FindAction("SwitchWeapons", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -318,6 +338,7 @@ public class @InputController : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Scope;
+    private readonly InputAction m_Player_SwitchWeapons;
     public struct PlayerActions
     {
         private @InputController m_Wrapper;
@@ -328,6 +349,7 @@ public class @InputController : IInputActionCollection, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Scope => m_Wrapper.m_Player_Scope;
+        public InputAction @SwitchWeapons => m_Wrapper.m_Player_SwitchWeapons;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -355,6 +377,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Scope.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScope;
                 @Scope.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScope;
                 @Scope.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScope;
+                @SwitchWeapons.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchWeapons;
+                @SwitchWeapons.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchWeapons;
+                @SwitchWeapons.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchWeapons;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -377,6 +402,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Scope.started += instance.OnScope;
                 @Scope.performed += instance.OnScope;
                 @Scope.canceled += instance.OnScope;
+                @SwitchWeapons.started += instance.OnSwitchWeapons;
+                @SwitchWeapons.performed += instance.OnSwitchWeapons;
+                @SwitchWeapons.canceled += instance.OnSwitchWeapons;
             }
         }
     }
@@ -398,5 +426,6 @@ public class @InputController : IInputActionCollection, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnScope(InputAction.CallbackContext context);
+        void OnSwitchWeapons(InputAction.CallbackContext context);
     }
 }
