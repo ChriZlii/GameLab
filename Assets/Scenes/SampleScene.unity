@@ -303,6 +303,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 748158465796102403, guid: 5bbc50702821a1c4b9075d97eb96af37,
+        type: 3}
+      propertyPath: FPSCamera
+      value: 
+      objectReference: {fileID: 963194227}
+    - target: {fileID: 748158465796102403, guid: 5bbc50702821a1c4b9075d97eb96af37,
+        type: 3}
+      propertyPath: FireRate
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bbc50702821a1c4b9075d97eb96af37, type: 3}
 --- !u!1 &305551241
@@ -464,6 +474,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 464423028684708511, guid: e1e3fe54eda0c934480175d27309bcda,
+        type: 3}
+      propertyPath: FPSCamera
+      value: 
+      objectReference: {fileID: 963194227}
+    - target: {fileID: 464423028684708511, guid: e1e3fe54eda0c934480175d27309bcda,
+        type: 3}
+      propertyPath: FireRate
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1e3fe54eda0c934480175d27309bcda, type: 3}
 --- !u!4 &417353087 stripped
@@ -600,7 +620,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.614e-42, y: 6.098e-42, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 4e-45}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -630,7 +650,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -773,6 +793,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8881504956694493178, guid: e95a364f8359d774da8ab79cc2e916c4,
+        type: 3}
+      propertyPath: FPSCamera
+      value: 
+      objectReference: {fileID: 963194227}
+    - target: {fileID: 8881504956694493178, guid: e95a364f8359d774da8ab79cc2e916c4,
+        type: 3}
+      propertyPath: FireRate
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e95a364f8359d774da8ab79cc2e916c4, type: 3}
@@ -981,6 +1011,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6472230302747508732, guid: e73a3821863f50c4e9662f1695b3f116,
+        type: 3}
+      propertyPath: FPSCamera
+      value: 
+      objectReference: {fileID: 963194227}
+    - target: {fileID: 6472230302747508732, guid: e73a3821863f50c4e9662f1695b3f116,
+        type: 3}
+      propertyPath: FireRate
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e73a3821863f50c4e9662f1695b3f116, type: 3}
