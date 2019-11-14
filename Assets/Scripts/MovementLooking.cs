@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementLooking : MonoBehaviour
+public class MovementLooking : NetworkBehaviour
 {
     // Public editable Variables
     public GameObject head;
@@ -29,8 +30,7 @@ public class MovementLooking : MonoBehaviour
     private void Awake()
     {
         controls = new InputController();
-        Cursor.lockState = CursorLockMode.Locked;
-
+        //Cursor.lockState = CursorLockMode.Locked;
         velocity = Vector3.zero;
     }
 
@@ -41,6 +41,9 @@ public class MovementLooking : MonoBehaviour
 
     private void Update()
     {
+        // movement for local player
+        if (!isLocalPlayer) return;
+
         Gravity();
         Move();
         Look();
