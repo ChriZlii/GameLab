@@ -1,2 +1,2 @@
 # ShooterGame
-First try to create a smal Shootegame in Unity
+First try to create a small Shootegame in Unity
