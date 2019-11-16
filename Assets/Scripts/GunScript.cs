@@ -47,7 +47,7 @@ public class GunScript : MonoBehaviour
     void Shoot()
     {
         RaycastHit rayHit;
-        if (Physics.Raycast(WeabonMuzzle.transform.position, FPSCamera.transform.forward, out rayHit, Distance))
+        if (Physics.Raycast(WeabonMuzzle.transform.position, WeabonMuzzle.transform.forward, out rayHit, Distance))
         {
             // hit something
             Debug.Log(rayHit.collider.name);
