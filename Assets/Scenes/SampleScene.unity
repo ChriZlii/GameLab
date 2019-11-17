@@ -217,7 +217,7 @@ MonoBehaviour:
   networkAddress: localhost
   maxConnections: 4
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 6689093196697791730, guid: 5c14c6c5d6bfb4f4f8237d6e7caf8b90,
+  playerPrefab: {fileID: 2419262775035212041, guid: 5c14c6c5d6bfb4f4f8237d6e7caf8b90,
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 1
@@ -481,7 +481,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
+  m_TargetDisplay: 1
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
