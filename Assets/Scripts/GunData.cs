@@ -6,10 +6,14 @@ public class GunData : MonoBehaviour
 {
 
     public GameObject WeabonMuzzle;
+    public ParticleSystem MuzzleParticles;
+    public GameObject BulletPrefab;
+
 
     [Header("Weapon Data")]
-    public float Damage = 15f;
-    public float Distance = 100f;
+    public float ShootingDistance = 100f;
     public float FireRate = 10f;
-    public float NextTimeToFire = 0;
+    [HideInInspector]public float NextTimeToFire = 0;
+
+
 }

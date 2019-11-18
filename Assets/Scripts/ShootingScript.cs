@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 
 [RequireComponent(typeof(WeaponholderScript))]
-public class ShootingScript : MonoBehaviour
+public class ShootingScript : NetworkBehaviour
 {
     //Public Variables
 
@@ -26,27 +27,39 @@ public class ShootingScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isLocalPlayer) return;
+
+
         gunData = weaponholder.SelectedWeapon.GetComponent<GunData>();
 
         if (controls.Player.Shoot.ReadValue<float>() == 1 && Time.time >= gunData.NextTimeToFire)
         {
             gunData.NextTimeToFire = Time.time + 1f / gunData.FireRate;
-            Shoot();
+            Cmd_Shoot();
         }
     }
 
 
 
 
-
-    void Shoot()
+    [Command]
+    void Cmd_Shoot()
     {
-        RaycastHit rayHit;
-        if (Physics.Raycast(gunData.WeabonMuzzle.transform.position, gunData.WeabonMuzzle.transform.forward, out rayHit, gunData.Distance))
-        {
-            // hit something
-            Debug.Log(rayHit.collider.name);
-        }
+        GameObject Bullet = Instantiate(gunData.BulletPrefab, gunData.WeabonMuzzle.transform.position, gunData.WeabonMuzzle.transform.rotation);
+
+        BulletScript BullData = Bullet.GetComponent<BulletScript>();
+        //BullData.MaxFlightDistance = gunData.ShootingDistance;
+        BullData.PLAYERID = netId;
+
+        NetworkServer.Spawn(Bullet);
+
+        Rpc_ShootDebug();
+    }
+
+    [ClientRpc]
+    void Rpc_ShootDebug()
+    {
+        Debug.Log("Shooting " + netId);
     }
 }
 
