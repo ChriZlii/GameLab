@@ -6,13 +6,20 @@ public class WeaponholderScript : NetworkBehaviour
 
     // Publics
     public GameObject Weaponholder = null;
+    public bool EnableManulaSwitching = true;
 
-    [SyncVar] public int selectedWeapon = 0;
-    public bool EnableManulaSelection = false;
 
+    [HideInInspector] public GameObject SelectedWeapon = null;
+
+    [SyncVar] public int selectedWeaponNum = 0;
+
+    
     // Privates
     private InputController controls = null;
     private int selectedWeaponPrevious = 0;
+
+
+
 
 
     private void Awake() => controls = new InputController();
@@ -29,14 +36,14 @@ public class WeaponholderScript : NetworkBehaviour
     
     void Update()
     {
-        if (EnableManulaSelection)
+        if (EnableManulaSwitching)
         {
             // every weaponholder--------------------------------------------------------------------------------------------
             // is weapon changed, change the wepon in hand
-            if (selectedWeapon != selectedWeaponPrevious)
+            if (selectedWeaponNum != selectedWeaponPrevious)
             {
                 SelectWeapon();
-                selectedWeaponPrevious = selectedWeapon;
+                selectedWeaponPrevious = selectedWeaponNum;
             }
 
 
@@ -46,13 +53,13 @@ public class WeaponholderScript : NetworkBehaviour
 
 
 
-            int weaponNumber = selectedWeapon;
+            int weaponNumber = selectedWeaponNum;
             float scrollwheelInput = controls.Player.SwitchWeapons.ReadValue<Vector2>().y;
 
             if (scrollwheelInput > 0)
             {
                 weaponNumber++;
-                if (weaponNumber == transform.childCount)
+                if (weaponNumber == Weaponholder.transform.childCount)
                 {
                     weaponNumber = 0;
                 }
@@ -62,15 +69,15 @@ public class WeaponholderScript : NetworkBehaviour
                 weaponNumber--;
                 if (weaponNumber == -1)
                 {
-                    weaponNumber = transform.childCount - 1;
+                    weaponNumber = Weaponholder.transform.childCount - 1;
                 }
             }
 
 
             // if weapon changed Publish to server
-            if (weaponNumber != selectedWeapon)
+            if (weaponNumber != selectedWeaponNum)
             {
-                selectedWeapon = weaponNumber;
+                selectedWeaponNum = weaponNumber;
                 CmdSelectetWeapon(weaponNumber);
             }
 
@@ -85,9 +92,10 @@ public class WeaponholderScript : NetworkBehaviour
         int count = 0;
         foreach (Transform weapon in Weaponholder.transform)
         {
-            if (count++ == selectedWeapon)
+            if (count++ == selectedWeaponNum)
             {
                 weapon.gameObject.SetActive(true);
+                SelectedWeapon = weapon.gameObject;
             }
             else
             {
@@ -103,7 +111,7 @@ public class WeaponholderScript : NetworkBehaviour
     [Command]
     public void CmdSelectetWeapon(int seletion)
     {
-        this.selectedWeapon = seletion;
+        this.selectedWeaponNum = seletion;
     }
 
 }

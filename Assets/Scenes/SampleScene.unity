@@ -217,12 +217,16 @@ MonoBehaviour:
   networkAddress: localhost
   maxConnections: 4
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 6689093196697791730, guid: 5c14c6c5d6bfb4f4f8237d6e7caf8b90,
+  playerPrefab: {fileID: 2419262775035212041, guid: 5c14c6c5d6bfb4f4f8237d6e7caf8b90,
     type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 1
   spawnPrefabs:
-  - {fileID: 0}
+  - {fileID: 9065327850195104207, guid: 46286299e251e124b80dff7ce86c4c05, type: 3}
+  - {fileID: 3225238819807902073, guid: a5c2f5d0e84d85345ab598905544aa30, type: 3}
+  - {fileID: 7252423528053236798, guid: 379f4878ed8bbe042b0c372c5c18232a, type: 3}
+  - {fileID: 2975396195604681419, guid: c04e12c37f6689d448a037600f9de464, type: 3}
+  - {fileID: 2269401966586442831, guid: b1e1fe2ad30021141b4ff3d7ec27aebc, type: 3}
 --- !u!4 &150067797
 Transform:
   m_ObjectHideFlags: 0
@@ -256,8 +260,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &642051029
-MeshCollider:
+--- !u!65 &642051029
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -266,10 +270,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 2
+  m_Size: {x: 10, y: 1, z: 10}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!23 &642051030
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -403,7 +406,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.2e-43, y: 2.6288e-41, z: 5.2e-43, w: 9.792584e+22}
+  m_BoundingSphereOverride: {x: 7.105e-42, y: 1.02e-43, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -481,7 +484,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
+  m_TargetDisplay: 1
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1

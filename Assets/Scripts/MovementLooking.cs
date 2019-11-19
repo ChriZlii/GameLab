@@ -20,7 +20,7 @@ public class MovementLooking : NetworkBehaviour
 
     // Private Variables
     private InputController controls = null;
-    private float xRotation = 90f;
+    private float xRotation = 0;
     private bool isGrounded = false;
     public  Vector3 velocity;
 
@@ -57,7 +57,7 @@ public class MovementLooking : NetworkBehaviour
 
         // Camera Rotation UP/DOWN
         this.xRotation -= deltaMouse.y;
-        this.xRotation = Mathf.Clamp(this.xRotation, -90f, 90f);
+        this.xRotation = Mathf.Clamp(this.xRotation, -40f, 70f);
         head.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
     }
 
