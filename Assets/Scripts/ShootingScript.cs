@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using UnityEngine;
 
-
+[RequireComponent(typeof(NetworkIdentity))]
 [RequireComponent(typeof(WeaponholderScript))]
 public class ShootingScript : NetworkBehaviour
 {
@@ -35,7 +35,7 @@ public class ShootingScript : NetworkBehaviour
         if (controls.Player.Shoot.ReadValue<float>() == 1 && Time.time >= gunData.NextTimeToFire)
         {
             gunData.NextTimeToFire = Time.time + 1f / gunData.FireRate;
-            Cmd_Shoot();
+            Cmd_Shoot(netId);
         }
     }
 
@@ -43,23 +43,27 @@ public class ShootingScript : NetworkBehaviour
 
 
     [Command]
-    void Cmd_Shoot()
+    public void Cmd_Shoot(uint PlayerNetID)
     {
-        GameObject Bullet = Instantiate(gunData.BulletPrefab, gunData.WeabonMuzzle.transform.position, gunData.WeabonMuzzle.transform.rotation);
+        GameObject _player = NetworkIdentity.spawned[PlayerNetID].gameObject;
+        GameObject _SelectedWeapon = _player.GetComponent<WeaponholderScript>().SelectedWeapon;
+        GunData _gundata = _SelectedWeapon.GetComponent<GunData>();
 
-        BulletScript BullData = Bullet.GetComponent<BulletScript>();
-        //BullData.MaxFlightDistance = gunData.ShootingDistance;
-        BullData.PLAYERID = netId;
+        GameObject _Bullet = Instantiate(_gundata.BulletPrefab, _gundata.WeabonMuzzle.transform.position, _gundata.WeabonMuzzle.transform.rotation);
 
-        NetworkServer.Spawn(Bullet);
+        BulletScript _BullData = _Bullet.GetComponent<BulletScript>();
+        //_BullData.MaxFlightDistance = _gunData.ShootingDistance;
+        _BullData.PLAYERID = PlayerNetID;
 
-        Rpc_ShootDebug();
+        NetworkServer.Spawn(_Bullet);
+
+        Rpc_ShootDebug(PlayerNetID);
     }
 
     [ClientRpc]
-    void Rpc_ShootDebug()
+    public void Rpc_ShootDebug(uint PlayerNetID)
     {
-        Debug.Log("Shooting " + netId);
+        Debug.Log("Shooting PlayerID:" + PlayerNetID);
     }
 }
 
