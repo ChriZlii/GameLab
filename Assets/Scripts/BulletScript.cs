@@ -30,13 +30,12 @@ public class BulletScript : NetworkBehaviour
         }
     }
 
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        GameObject inpact = Instantiate(Bulletinpact, transform.position, Quaternion.LookRotation(collision.contacts[0].normal));
-        Debug.Log("Inpact Bullet ID: " + netId);
-        //Destroy(inpact, 2f);
-        Destroy(this);
+        GameObject inpact = Instantiate(Bulletinpact, transform.position, Quaternion.LookRotation(transform.forward));
+        Destroy(inpact, 2f);
+        Destroy(gameObject);
+        //Debug.Break();
     }
 
 }
