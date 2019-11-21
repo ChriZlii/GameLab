@@ -12,6 +12,7 @@ public class GunData : MonoBehaviour
 
     [Header("Weapon Data")]
     public float ShootingDistance = 100f;
+    public float Damage = 10f;
     public float FireRate = 10f;
     [HideInInspector]public float NextTimeToFire = 0;
 

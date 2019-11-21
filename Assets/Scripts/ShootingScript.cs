@@ -52,9 +52,10 @@ public class ShootingScript : NetworkBehaviour
         GameObject _Bullet = Instantiate(_gundata.BulletPrefab, _gundata.WeabonMuzzle.transform.position, _gundata.WeabonMuzzle.transform.rotation);
 
         BulletScript _BullData = _Bullet.GetComponent<BulletScript>();
-        //_BullData.MaxFlightDistance = _gunData.ShootingDistance;
+        _BullData.BulletDamage = _gundata.Damage;
+        _BullData.MaxFlightDistance = _gundata.ShootingDistance;
         _BullData.PLAYERID = PlayerNetID;
-
+         
         NetworkServer.Spawn(_Bullet);
 
         Rpc_ShootDebug(PlayerNetID);

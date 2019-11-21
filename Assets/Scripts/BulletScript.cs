@@ -7,11 +7,11 @@ public class BulletScript : NetworkBehaviour
     public GameObject Bulletinpact = null;
 
     [Header("Bullet Data")]
-    public float BulletDamage = 15f;
     public float BulletSpeed = 1f;
     public float MaxFlightDistance = 50f;
 
     [HideInInspector] public uint PLAYERID = 0;
+    [HideInInspector] public float BulletDamage = 0f;
 
 
     // Private variables
@@ -20,9 +20,9 @@ public class BulletScript : NetworkBehaviour
 
     void Update()
     {
-        float distace = BulletSpeed * Time.deltaTime;
-        travelDistance += distace;
-        transform.position += transform.forward * distace;  
+        float distance = BulletSpeed * Time.deltaTime;
+        travelDistance += distance;
+        transform.position += transform.forward * distance;  
         
         if (travelDistance >= MaxFlightDistance)
         {

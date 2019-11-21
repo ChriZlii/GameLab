@@ -89,6 +89,7 @@ MonoBehaviour:
   BulletPrefab: {fileID: 2975396195604681419, guid: c04e12c37f6689d448a037600f9de464,
     type: 3}
   ShootingDistance: 100
+  Damage: 10
   FireRate: 0.25
   NextTimeToFire: 0
 --- !u!1 &505592702760381579
@@ -880,9 +881,10 @@ GameObject:
   - component: {fileID: 8175231512960313590}
   - component: {fileID: 8020189579717108655}
   - component: {fileID: 4753868141827027634}
+  - component: {fileID: 2828209011179392421}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1087,6 +1089,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+--- !u!114 &2828209011179392421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2419262775035212041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4e1558d2fed464d8eebf45881cb722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerPrefab: {fileID: 2419262775035212041}
+  Health: 100
 --- !u!1 &3227764496243834525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1290,6 +1306,7 @@ MonoBehaviour:
   BulletPrefab: {fileID: 3225238819807902073, guid: a5c2f5d0e84d85345ab598905544aa30,
     type: 3}
   ShootingDistance: 100
+  Damage: 10
   FireRate: 1
   NextTimeToFire: 0
 --- !u!1 &3807564819767937004
@@ -1730,6 +1747,7 @@ MonoBehaviour:
   BulletPrefab: {fileID: 7252423528053236798, guid: 379f4878ed8bbe042b0c372c5c18232a,
     type: 3}
   ShootingDistance: 100
+  Damage: 10
   FireRate: 5
   NextTimeToFire: 0
 --- !u!1 &4409462515089822904
@@ -1821,6 +1839,7 @@ MonoBehaviour:
   BulletPrefab: {fileID: 9065327850195104207, guid: 46286299e251e124b80dff7ce86c4c05,
     type: 3}
   ShootingDistance: 100
+  Damage: 10
   FireRate: 2.5
   NextTimeToFire: 0
 --- !u!1 &4789879952170666862

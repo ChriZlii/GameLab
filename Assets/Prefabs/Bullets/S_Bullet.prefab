@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -7304860184536189377}
   m_Layer: 0
   m_Name: S_Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,7 +115,7 @@ MonoBehaviour:
     type: 3}
   BulletDamage: 15
   BulletSpeed: 1
-  MaxFlightDistance: 2
+  MaxFlightDistance: 10
   PLAYERID: 0
 --- !u!114 &5555793047530585997
 MonoBehaviour:
