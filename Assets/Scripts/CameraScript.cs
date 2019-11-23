@@ -1,27 +1,41 @@
-﻿using Mirror;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    // Start is called before the first frame update
+
     public void Start()
     {
 
+        UpdateCamera();
+        StartCoroutine(DelayedFunktion(1f));
+    }
+
+
+    IEnumerator DelayedFunktion(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        UpdateCamera();
+    }
+
+
+
+    private void UpdateCamera()
+    {
         if (!this.transform.parent.transform.parent.GetComponent<MovementLooking>().isLocalPlayer)
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
 
-            //gameObject.GetComponent<Camera>().enabled = false;
-            //gameObject.GetComponent<AudioListener>().enabled = false;
+            gameObject.GetComponent<Camera>().enabled = false;
+            gameObject.GetComponent<AudioListener>().enabled = false;
         }
-
+        else
+        {
+            gameObject.GetComponent<Camera>().enabled = true;
+            gameObject.GetComponent<AudioListener>().enabled = true;
+        }
     }
 
-    private void Update()
-    {
-        Debug.Log(this.transform.parent.transform.parent.GetComponent<MovementLooking>().isLocalPlayer);
-    }
+
 
 }

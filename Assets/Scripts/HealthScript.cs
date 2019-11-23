@@ -1,33 +1,27 @@
 ﻿using Mirror;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthScript : NetworkBehaviour
 {
-    public GameObject PlayerPrefab;
-    public float Health = 100.0f;
+
+    [SyncVar] public float Health = 100.0f;
+
 
 
     private void OnTriggerEnter(Collider collider)
     {
+        if (!isLocalPlayer) return;
+
         if (collider.gameObject.CompareTag("Bullet"))
         {
-            float damage = collider.gameObject.GetComponent<BulletScript>().BulletDamage;
-            Health -= damage;
 
-            if (Health <= 0)
+            float damage = collider.gameObject.GetComponent<BulletScript>().BulletDamage;
+
+            CmdUpdateHealth(this.Health - damage);
+
+            if (this.Health <= 0)
             {
-                // destroy
-                if (CompareTag("Player"))
-                {
-                    RespawnPlayer();
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
-                
+                RespawnPlayer();
             }
 
         }
@@ -39,19 +33,24 @@ public class HealthScript : NetworkBehaviour
 
     public void RespawnPlayer()
     {
-        var conn = connectionToClient;
-        var newPlayer = Instantiate<GameObject>(NetworkManager.singleton.playerPrefab);
-        //Debug.Break();
-        NetworkServer.ReplacePlayerForConnection(conn, newPlayer);
+        NetworkConnection conn = connectionToClient;
+        GameObject newPlayer = Instantiate<GameObject>(NetworkManager.singleton.playerPrefab);
 
-        //Debug.Break();
-        transform.Find("Head").Find("Camera").gameObject.SetActive(false);
-        newPlayer.transform.Find("Head").Find("Camera").gameObject.SetActive(true);
-        //Debug.Break();
         NetworkManager.Destroy(gameObject);
-        Destroy(gameObject);
+        //Destroy(gameObject);
 
-        //Debug.Break();
+        NetworkServer.ReplacePlayerForConnection(conn, newPlayer);
+    }
+
+
+
+
+
+
+    [Command]
+    public void CmdUpdateHealth(float health)
+    {
+        this.Health = health;
     }
 
 

@@ -253,7 +253,6 @@ GameObject:
   - component: {fileID: 554296990}
   - component: {fileID: 554296989}
   - component: {fileID: 554296988}
-  - component: {fileID: 554296992}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -334,22 +333,6 @@ Transform:
   m_Father: {fileID: 642051032}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &554296992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 554296987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c4e1558d2fed464d8eebf45881cb722, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  PlayerPrefab: {fileID: 0}
-  Health: 100
 --- !u!1 &642051028
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,7 +442,6 @@ GameObject:
   - component: {fileID: 680462453}
   - component: {fileID: 680462452}
   - component: {fileID: 680462451}
-  - component: {fileID: 680462455}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -540,22 +522,6 @@ Transform:
   m_Father: {fileID: 642051032}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &680462455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680462450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c4e1558d2fed464d8eebf45881cb722, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  PlayerPrefab: {fileID: 0}
-  Health: 100
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,7 +595,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 4.08e-43, y: -153989.38, z: 4.08e-43, w: -166649.88}
+  m_BoundingSphereOverride: {x: 0.20703125, y: 0.08203125, z: 0.015625, w: -0.08203125}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -702,7 +668,6 @@ GameObject:
   - component: {fileID: 1862449999}
   - component: {fileID: 1862449998}
   - component: {fileID: 1862449997}
-  - component: {fileID: 1862450001}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -783,22 +748,6 @@ Transform:
   m_Father: {fileID: 642051032}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1862450001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862449996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c4e1558d2fed464d8eebf45881cb722, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  PlayerPrefab: {fileID: 0}
-  Health: 100
 --- !u!1 &1999035608
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,7 +760,6 @@ GameObject:
   - component: {fileID: 1999035611}
   - component: {fileID: 1999035610}
   - component: {fileID: 1999035609}
-  - component: {fileID: 1999035613}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -892,22 +840,6 @@ Transform:
   m_Father: {fileID: 642051032}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1999035613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999035608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c4e1558d2fed464d8eebf45881cb722, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  PlayerPrefab: {fileID: 0}
-  Health: 100
 --- !u!1 &2043254851
 GameObject:
   m_ObjectHideFlags: 0
@@ -918,7 +850,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2043254854}
   - component: {fileID: 2043254853}
-  - component: {fileID: 2043254852}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -926,14 +857,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &2043254852
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043254851}
-  m_Enabled: 1
 --- !u!20 &2043254853
 Camera:
   m_ObjectHideFlags: 0
