@@ -226,7 +226,7 @@ MonoBehaviour:
   - {fileID: 3225238819807902073, guid: a5c2f5d0e84d85345ab598905544aa30, type: 3}
   - {fileID: 7252423528053236798, guid: 379f4878ed8bbe042b0c372c5c18232a, type: 3}
   - {fileID: 2975396195604681419, guid: c04e12c37f6689d448a037600f9de464, type: 3}
-  - {fileID: 2269401966586442831, guid: b1e1fe2ad30021141b4ff3d7ec27aebc, type: 3}
+  - {fileID: 0}
 --- !u!4 &150067797
 Transform:
   m_ObjectHideFlags: 0
@@ -595,7 +595,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0.20703125, y: 0.08203125, z: 0.015625, w: -0.08203125}
+  m_BoundingSphereOverride: {x: 5.16e-43, y: -2.2777335e+30, z: 5.16e-43, w: 1.28e-43}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

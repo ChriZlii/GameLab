@@ -58,7 +58,7 @@ public class ShootingScript : NetworkBehaviour
          
         NetworkServer.Spawn(_Bullet);
 
-        Rpc_ShootDebug(PlayerNetID);
+        //Rpc_ShootDebug(PlayerNetID);
     }
 
     [ClientRpc]

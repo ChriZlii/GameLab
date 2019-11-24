@@ -11,7 +11,8 @@ public class WeaponholderScript : NetworkBehaviour
 
     [HideInInspector] public GameObject SelectedWeapon = null;
 
-    [SyncVar] public int selectedWeaponNum = 0;
+    [SyncVar] 
+    public int selectedWeaponNum = 0;
 
     
     // Privates

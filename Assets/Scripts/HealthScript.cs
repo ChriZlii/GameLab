@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class HealthScript : NetworkBehaviour
 {
-
     [SyncVar] public float Health = 100.0f;
 
 
@@ -16,12 +15,14 @@ public class HealthScript : NetworkBehaviour
         {
 
             float damage = collider.gameObject.GetComponent<BulletScript>().BulletDamage;
+            NetworkManager.Destroy(collider.gameObject);
 
-            CmdUpdateHealth(this.Health - damage);
+            float MyHealth = Health - damage;
+            CmdUpdateHealth(MyHealth);
 
-            if (this.Health <= 0)
+            if (MyHealth <= 0)
             {
-                RespawnPlayer();
+                Cmd_RespawnPlayer(netId);
             }
 
         }
@@ -31,15 +32,33 @@ public class HealthScript : NetworkBehaviour
 
 
 
-    public void RespawnPlayer()
+    //public void RespawnPlayer()
+    //{
+    //    NetworkConnection conn = connectionToClient;
+    //    GameObject newPlayer = Instantiate<GameObject>(NetworkManager.singleton.playerPrefab);
+
+    //    NetworkManager.Destroy(gameObject);
+    //    //Destroy(gameObject);
+
+    //    NetworkServer.ReplacePlayerForConnection(conn, newPlayer);
+    //    NetworkServer.Spawn(newPlayer, conn);
+    //}
+
+    [Command]
+    public void Cmd_RespawnPlayer(uint PlayerNetID)
     {
-        NetworkConnection conn = connectionToClient;
+        GameObject _player = NetworkIdentity.spawned[PlayerNetID].gameObject;
+        NetworkConnection _con = _player.GetComponent<NetworkIdentity>().connectionToClient;
+
+        NetworkManager.Destroy(_player);
+        //Destroy(_player);
+
         GameObject newPlayer = Instantiate<GameObject>(NetworkManager.singleton.playerPrefab);
 
-        NetworkManager.Destroy(gameObject);
-        //Destroy(gameObject);
 
-        NetworkServer.ReplacePlayerForConnection(conn, newPlayer);
+        NetworkServer.ReplacePlayerForConnection(_con, newPlayer);
+        NetworkServer.Spawn(newPlayer, _con);
+
     }
 
 
@@ -52,7 +71,6 @@ public class HealthScript : NetworkBehaviour
     {
         this.Health = health;
     }
-
 
 
 }

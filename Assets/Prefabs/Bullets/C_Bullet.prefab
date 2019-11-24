@@ -99,10 +99,10 @@ MonoBehaviour:
   syncInterval: 0.1
   Bulletinpact: {fileID: 2485986588240205421, guid: b1e1fe2ad30021141b4ff3d7ec27aebc,
     type: 3}
-  BulletDamage: 15
   BulletSpeed: 1
   MaxFlightDistance: 10
   PLAYERID: 0
+  BulletDamage: 3
 --- !u!136 &8277658170246229403
 CapsuleCollider:
   m_ObjectHideFlags: 0

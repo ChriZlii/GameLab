@@ -1101,7 +1101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4e1558d2fed464d8eebf45881cb722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPrefab: {fileID: 2419262775035212041}
+  syncMode: 0
+  syncInterval: 0.1
   Health: 100
 --- !u!1 &3227764496243834525
 GameObject:
