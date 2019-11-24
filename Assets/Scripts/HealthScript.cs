@@ -7,24 +7,39 @@ public class HealthScript : NetworkBehaviour
 
 
 
-    private void OnTriggerEnter(Collider collider)
+    //private void OnTriggerEnter(Collider collider)
+    //{
+    //    if (!isLocalPlayer) return;
+
+    //    if (collider.gameObject.CompareTag("Bullet"))
+    //    {
+
+    //        float damage = collider.gameObject.GetComponent<BulletScript>().BulletDamage;
+    //        Cmd_Debug(damage);
+
+    //        NetworkManager.Destroy(collider.gameObject);
+
+    //        float MyHealth = Health - damage;
+    //        CmdUpdateHealth(MyHealth);
+
+    //        if (MyHealth <= 0)
+    //        {
+    //            Cmd_RespawnPlayer(netId);
+    //        }
+
+    //    }
+    //}
+
+    public void TakeDamageFromBullet(float damage)
     {
         if (!isLocalPlayer) return;
 
-        if (collider.gameObject.CompareTag("Bullet"))
+        float MyHealth = this.Health - damage;
+        CmdUpdateHealth(MyHealth);
+
+        if (MyHealth <= 0)
         {
-
-            float damage = collider.gameObject.GetComponent<BulletScript>().BulletDamage;
-            NetworkManager.Destroy(collider.gameObject);
-
-            float MyHealth = Health - damage;
-            CmdUpdateHealth(MyHealth);
-
-            if (MyHealth <= 0)
-            {
-                Cmd_RespawnPlayer(netId);
-            }
-
+            Cmd_RespawnPlayer(netId);
         }
     }
 
@@ -72,5 +87,13 @@ public class HealthScript : NetworkBehaviour
         this.Health = health;
     }
 
+    [Command]
+    public void Cmd_Debug(float obj) => Rpc_Debug(obj);
+
+    [ClientRpc]
+    public void Rpc_Debug(float obj)
+    {
+        Debug.Log(obj);
+    }
 
 }

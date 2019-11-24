@@ -39,12 +39,16 @@ public class BulletScript : NetworkBehaviour
     {
         GameObject inpact = Instantiate(Bulletinpact, transform.position, Quaternion.LookRotation(transform.forward));
 
-        isActive = false;
+        other.gameObject.SendMessage("TakeDamageFromBullet", BulletDamage);
 
-        NetworkManager.Destroy(gameObject, 0.1f);
         Destroy(inpact, 2f);
 
         //Debug.Break();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        NetworkManager.Destroy(gameObject);
     }
 
 }
