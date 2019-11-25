@@ -46,19 +46,6 @@ public class HealthScript : NetworkBehaviour
 
 
 
-
-    //public void RespawnPlayer()
-    //{
-    //    NetworkConnection conn = connectionToClient;
-    //    GameObject newPlayer = Instantiate<GameObject>(NetworkManager.singleton.playerPrefab);
-
-    //    NetworkManager.Destroy(gameObject);
-    //    //Destroy(gameObject);
-
-    //    NetworkServer.ReplacePlayerForConnection(conn, newPlayer);
-    //    NetworkServer.Spawn(newPlayer, conn);
-    //}
-
     [Command]
     public void Cmd_RespawnPlayer(uint PlayerNetID)
     {
@@ -68,12 +55,14 @@ public class HealthScript : NetworkBehaviour
         NetworkManager.Destroy(_player);
         //Destroy(_player);
 
-        GameObject newPlayer = Instantiate<GameObject>(NetworkManager.singleton.playerPrefab);
-        newPlayer.GetComponent<HealthScript>().Health = 100;
+        Transform _spawnpoint = NetworkManager.singleton.GetStartPosition();
+
+        GameObject _newPlayer = Instantiate<GameObject>(NetworkManager.singleton.playerPrefab, _spawnpoint.position, _spawnpoint.rotation);
+        _newPlayer.GetComponent<HealthScript>().Health = 100;
 
 
-        NetworkServer.ReplacePlayerForConnection(_con, newPlayer);
-        NetworkServer.Spawn(newPlayer, _con);
+        NetworkServer.ReplacePlayerForConnection(_con, _newPlayer);
+        NetworkServer.Spawn(_newPlayer, _con);
 
     }
 
