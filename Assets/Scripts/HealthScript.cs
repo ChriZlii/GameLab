@@ -69,6 +69,7 @@ public class HealthScript : NetworkBehaviour
         //Destroy(_player);
 
         GameObject newPlayer = Instantiate<GameObject>(NetworkManager.singleton.playerPrefab);
+        newPlayer.GetComponent<HealthScript>().Health = 100;
 
 
         NetworkServer.ReplacePlayerForConnection(_con, newPlayer);

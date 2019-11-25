@@ -10,8 +10,7 @@ public class BulletScript : NetworkBehaviour
     public float BulletSpeed = 1f;
     public float MaxFlightDistance = 50f;
 
-    [HideInInspector] public uint PLAYERID = 0;
-    /*[HideInInspector]*/
+    public uint PLAYERID = 0;
     public float BulletDamage = 0f;
 
 
@@ -39,7 +38,9 @@ public class BulletScript : NetworkBehaviour
     {
         GameObject inpact = Instantiate(Bulletinpact, transform.position, Quaternion.LookRotation(transform.forward));
 
-        other.gameObject.SendMessage("TakeDamageFromBullet", BulletDamage);
+        // if is Player, tage damage from bullet
+        if (other.gameObject.CompareTag("Player")) 
+            other.gameObject.SendMessage("TakeDamageFromBullet", BulletDamage);
 
         Destroy(inpact, 2f);
 

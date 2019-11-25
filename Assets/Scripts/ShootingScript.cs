@@ -10,7 +10,7 @@ public class ShootingScript : NetworkBehaviour
     // Private Variables
     private InputController controls = null;
     private WeaponholderScript weaponholder = null;
-    private GunData gunData = null;
+    //private GunData gunData = null;
 
 
 
@@ -30,7 +30,7 @@ public class ShootingScript : NetworkBehaviour
         if (!isLocalPlayer) return;
 
 
-        gunData = weaponholder.SelectedWeapon.GetComponent<GunData>();
+        GunData gunData = weaponholder.SelectedWeapon.GetComponent<GunData>();
 
         if (controls.Player.Shoot.ReadValue<float>() == 1 && Time.time >= gunData.NextTimeToFire)
         {
@@ -52,10 +52,11 @@ public class ShootingScript : NetworkBehaviour
         GameObject _Bullet = Instantiate(_gundata.BulletPrefab, _gundata.WeabonMuzzle.transform.position, _gundata.WeabonMuzzle.transform.rotation);
 
         BulletScript _BullData = _Bullet.GetComponent<BulletScript>();
-        _BullData.BulletDamage = _gundata.Damage;
-        _BullData.MaxFlightDistance = _gundata.ShootingDistance;
-        _BullData.PLAYERID = PlayerNetID;
-         
+        // Bug Workaround ClickUp ID #2jj8b0
+        //_BullData.BulletDamage = _gundata.Damage;
+        //_BullData.MaxFlightDistance = _gundata.ShootingDistance;
+        //_BullData.PLAYERID = PlayerNetID;
+
         NetworkServer.Spawn(_Bullet);
 
         //Rpc_ShootDebug(PlayerNetID);
