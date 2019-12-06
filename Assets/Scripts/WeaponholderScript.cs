@@ -1,16 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Mirror;
 using UnityEngine;
 
-public class WeaponholderScript : MonoBehaviour
+public class WeaponholderScript : NetworkBehaviour
 {
 
     // Publics
-    public int selectedWeapon = 0;
-    public bool EnableManulaSelection = false;
+    public GameObject Weaponholder = null;
+    public bool EnableManulaSwitching = true;
 
-    // PRivates
+
+    [HideInInspector] public GameObject SelectedWeapon = null;
+
+    [SyncVar] 
+    public int selectedWeaponNum = 0;
+
+    
+    // Privates
     private InputController controls = null;
+    private int selectedWeaponPrevious = 0;
+
+
+
 
 
     private void Awake() => controls = new InputController();
@@ -21,46 +31,72 @@ public class WeaponholderScript : MonoBehaviour
 
     void Start()
     {
-        SelectWeapon(selectedWeapon);
+        SelectWeapon();
     }
 
     
     void Update()
     {
-        if (EnableManulaSelection)
+        if (EnableManulaSwitching)
         {
+            // every weaponholder--------------------------------------------------------------------------------------------
+            // is weapon changed, change the wepon in hand
+            if (selectedWeaponNum != selectedWeaponPrevious)
+            {
+                SelectWeapon();
+                selectedWeaponPrevious = selectedWeaponNum;
+            }
+
+
+
+            if (!isLocalPlayer) return;
+            // only weaponholder----------------------------------------------------------------------------------------------
+
+
+
+            int weaponNumber = selectedWeaponNum;
             float scrollwheelInput = controls.Player.SwitchWeapons.ReadValue<Vector2>().y;
 
             if (scrollwheelInput > 0)
             {
-                selectedWeapon++;
-                if (selectedWeapon == transform.childCount)
+                weaponNumber++;
+                if (weaponNumber == Weaponholder.transform.childCount)
                 {
-                    selectedWeapon = 0;
+                    weaponNumber = 0;
                 }
             }
             else if (scrollwheelInput < 0)
             {
-                selectedWeapon--;
-                if (selectedWeapon == -1)
+                weaponNumber--;
+                if (weaponNumber == -1)
                 {
-                    selectedWeapon = transform.childCount - 1;
+                    weaponNumber = Weaponholder.transform.childCount - 1;
                 }
             }
 
-            SelectWeapon(selectedWeapon);
+
+            // if weapon changed Publish to server
+            if (weaponNumber != selectedWeaponNum)
+            {
+                selectedWeaponNum = weaponNumber;
+                CmdSelectetWeapon(weaponNumber);
+            }
+
+
+            
         }
     }
 
 
-    void SelectWeapon(int weaponIndex)
+    void SelectWeapon()
     {
         int count = 0;
-        foreach (Transform weapon in transform)
+        foreach (Transform weapon in Weaponholder.transform)
         {
-            if (count++ == selectedWeapon)
+            if (count++ == selectedWeaponNum)
             {
                 weapon.gameObject.SetActive(true);
+                SelectedWeapon = weapon.gameObject;
             }
             else
             {
@@ -69,4 +105,14 @@ public class WeaponholderScript : MonoBehaviour
         }
 
     }
+
+
+
+    // publishes the weapon change to the server. The server Syncs it to the rest of holders
+    [Command]
+    public void CmdSelectetWeapon(int seletion)
+    {
+        this.selectedWeaponNum = seletion;
+    }
+
 }
