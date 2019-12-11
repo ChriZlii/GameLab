@@ -88,8 +88,6 @@ MonoBehaviour:
   MuzzleParticles: {fileID: 0}
   BulletPrefab: {fileID: 2975396195604681419, guid: c04e12c37f6689d448a037600f9de464,
     type: 3}
-  ShootingDistance: 100
-  Damage: 10
   FireRate: 0.25
   NextTimeToFire: 0
 --- !u!1 &505592702760381579
@@ -1052,6 +1050,7 @@ MonoBehaviour:
   syncInterval: 0.1
   head: {fileID: 5337705191109073633}
   controller: {fileID: 9057448713685300902}
+  MouseMode: 0
   MouseSensitivity: 8
   movementSpeed: 5
   jumpHeight: 1
@@ -1306,8 +1305,6 @@ MonoBehaviour:
   MuzzleParticles: {fileID: 0}
   BulletPrefab: {fileID: 3225238819807902073, guid: a5c2f5d0e84d85345ab598905544aa30,
     type: 3}
-  ShootingDistance: 100
-  Damage: 10
   FireRate: 1
   NextTimeToFire: 0
 --- !u!1 &3807564819767937004
@@ -1747,8 +1744,6 @@ MonoBehaviour:
   MuzzleParticles: {fileID: 0}
   BulletPrefab: {fileID: 7252423528053236798, guid: 379f4878ed8bbe042b0c372c5c18232a,
     type: 3}
-  ShootingDistance: 100
-  Damage: 10
   FireRate: 5
   NextTimeToFire: 0
 --- !u!1 &4409462515089822904
@@ -1839,8 +1834,6 @@ MonoBehaviour:
   MuzzleParticles: {fileID: 0}
   BulletPrefab: {fileID: 9065327850195104207, guid: 46286299e251e124b80dff7ce86c4c05,
     type: 3}
-  ShootingDistance: 100
-  Damage: 10
   FireRate: 2.5
   NextTimeToFire: 0
 --- !u!1 &4789879952170666862
