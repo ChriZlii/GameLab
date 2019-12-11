@@ -6,7 +6,8 @@ public class WeaponholderScript : NetworkBehaviour
 
     // Publics
     public GameObject Weaponholder = null;
-    public bool EnableManulaSwitching = true;
+
+    public bool EnableManualSwitching = true;
 
 
     [HideInInspector] public GameObject SelectedWeapon = null;
@@ -37,7 +38,7 @@ public class WeaponholderScript : NetworkBehaviour
     
     void Update()
     {
-        if (EnableManulaSwitching)
+        if (EnableManualSwitching)
         {
             // every weaponholder--------------------------------------------------------------------------------------------
             // is weapon changed, change the wepon in hand
