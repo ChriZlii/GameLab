@@ -4,11 +4,13 @@ using UnityEngine;
 public class HealthScript : NetworkBehaviour
 {
 
+    [Header("Behavior")]
     public bool ShieldEnabled = true;
+
+    [Header("Health Data")]
 
     [SyncVar] public float Health = 100.0f;
     [SyncVar] public float ShieldHealth = 100.0f;
-
 
 
 
