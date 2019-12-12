@@ -3,49 +3,85 @@ using UnityEngine;
 
 public class HealthScript : NetworkBehaviour
 {
+
+    public bool ShieldEnabled = true;
+
     [SyncVar] public float Health = 100.0f;
+    [SyncVar] public float ShieldHealth = 100.0f;
 
 
 
-    //private void OnTriggerEnter(Collider collider)
-    //{
-    //    if (!isLocalPlayer) return;
 
-    //    if (collider.gameObject.CompareTag("Bullet"))
-    //    {
-
-    //        float damage = collider.gameObject.GetComponent<BulletScript>().BulletDamage;
-    //        Cmd_Debug(damage);
-
-    //        NetworkManager.Destroy(collider.gameObject);
-
-    //        float MyHealth = Health - damage;
-    //        CmdUpdateHealth(MyHealth);
-
-    //        if (MyHealth <= 0)
-    //        {
-    //            Cmd_RespawnPlayer(netId);
-    //        }
-
-    //    }
-    //}
-
+    // Called from bullet in impact. 
+    // Calls the shieldhealt und health update funkction.
     public void TakeDamageFromBullet(float damage)
     {
         if (!isLocalPlayer) return;
 
-        float MyHealth = this.Health - damage;
-        CmdUpdateHealth(MyHealth);
-
-        if (MyHealth <= 0)
-        {
-            Cmd_RespawnPlayer(netId);
-        }
+        TakeDamage(TakeShieldDamage(damage));
     }
 
 
 
 
+
+    // Calc the new ShieldHealth after bulletimpact.
+    //returns the rest damage when damage is heigher then shieldhealth
+    private float TakeShieldDamage(float damage)
+    {
+        //if Shield is disabled, return damage value 
+        if (!this.ShieldEnabled)
+        {
+            return damage;
+        }
+
+
+        float MyShieldHealth = 0;
+        float RestDamage = 0;
+
+        if (this.ShieldHealth > damage)
+        {
+            MyShieldHealth = this.ShieldHealth - damage;
+            CmdUpdateShieldHealth(MyShieldHealth);
+        }
+        else
+        {
+            RestDamage = damage - this.ShieldHealth;
+            CmdUpdateShieldHealth(0);
+        }
+
+        return RestDamage;
+    }
+
+    // clacs the new health value from player, after bullet impact.
+    // retruns the rest damage, when damage is heigher then healt.
+    private float TakeDamage(float damage)
+    {
+        float MyHealth = 0;
+        float RestDamage = 0;
+        if (this.Health > damage)
+        {
+            MyHealth = this.Health - damage;
+            CmdUpdateHealth(MyHealth);
+        }
+        else
+        {
+            RestDamage = damage - this.Health;
+            CmdUpdateHealth(0);
+        }
+
+        if (MyHealth <= 0)
+        {
+            Cmd_RespawnPlayer(netId);
+        }
+
+        return RestDamage;
+    }
+
+
+
+    // Respawns an new Playerobject and transfiers the Playerconection from Server.
+    // old Playerobject is deletet.
     [Command]
     public void Cmd_RespawnPlayer(uint PlayerNetID)
     {
@@ -76,6 +112,17 @@ public class HealthScript : NetworkBehaviour
     {
         this.Health = health;
     }
+    [Command]
+    public void CmdUpdateShieldHealth(float shieldhealth)
+    {
+        this.ShieldHealth = shieldhealth;
+    }
+
+
+
+
+
+
 
     [Command]
     public void Cmd_Debug(float obj) => Rpc_Debug(obj);
