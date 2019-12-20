@@ -63,6 +63,8 @@ public class MovementLooking : NetworkBehaviour
 
     public void Jump()
     {
+        if (!isLocalPlayer) return;
+
         if (isGrounded)
         {
             velocity.y += Mathf.Sqrt(jumpHeight * Physics.gravity.y * -1f);

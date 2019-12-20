@@ -73,6 +73,14 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""cd7a5503-3c13-4e6c-9b64-98587a80fb67"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -251,6 +259,17 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""action"": ""SwitchWeapons"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""862c0275-b71d-46df-94a1-59c934fc5f78"",
+                    ""path"": ""<Keyboard>/#(R)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -283,6 +302,7 @@ public class @InputController : IInputActionCollection, IDisposable
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Scope = m_Player.FindAction("Scope", throwIfNotFound: true);
         m_Player_SwitchWeapons = m_Player.FindAction("SwitchWeapons", throwIfNotFound: true);
+        m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +359,7 @@ public class @InputController : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Scope;
     private readonly InputAction m_Player_SwitchWeapons;
+    private readonly InputAction m_Player_Reload;
     public struct PlayerActions
     {
         private @InputController m_Wrapper;
@@ -350,6 +371,7 @@ public class @InputController : IInputActionCollection, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Scope => m_Wrapper.m_Player_Scope;
         public InputAction @SwitchWeapons => m_Wrapper.m_Player_SwitchWeapons;
+        public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -380,6 +402,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @SwitchWeapons.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchWeapons;
                 @SwitchWeapons.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchWeapons;
                 @SwitchWeapons.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchWeapons;
+                @Reload.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -405,6 +430,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @SwitchWeapons.started += instance.OnSwitchWeapons;
                 @SwitchWeapons.performed += instance.OnSwitchWeapons;
                 @SwitchWeapons.canceled += instance.OnSwitchWeapons;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
             }
         }
     }
@@ -427,5 +455,6 @@ public class @InputController : IInputActionCollection, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnScope(InputAction.CallbackContext context);
         void OnSwitchWeapons(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }

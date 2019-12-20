@@ -90,6 +90,9 @@ MonoBehaviour:
   BulletPrefab: {fileID: 2975396195604681419, guid: c04e12c37f6689d448a037600f9de464,
     type: 3}
   FireRate: 0.25
+  MagSize: 5
+  AmmoLoaded: 0
+  AmmoCount: 1000
   NextTimeToFire: 0
 --- !u!1 &505592702760381579
 GameObject:
@@ -975,6 +978,21 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 6f525ea2-886d-4252-820c-c3d5ad4e7920
     m_ActionName: Player/SwitchWeapons[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4753868141827027634}
+        m_MethodName: Reaload
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cd7a5503-3c13-4e6c-9b64-98587a80fb67
+    m_ActionName: Player/Reload[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1097,6 +1115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  AutoReload: 1
 --- !u!114 &2828209011179392421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1112,7 +1131,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   ShieldEnabled: 1
-  ShieldDamageLowering: 100
   Health: 100
   ShieldHealth: 100
 --- !u!1 &3227764496243834525
@@ -1320,6 +1338,9 @@ MonoBehaviour:
   BulletPrefab: {fileID: 3225238819807902073, guid: a5c2f5d0e84d85345ab598905544aa30,
     type: 3}
   FireRate: 1
+  MagSize: 12
+  AmmoLoaded: 0
+  AmmoCount: 1000
   NextTimeToFire: 0
 --- !u!1 &3807564819767937004
 GameObject:
@@ -1764,6 +1785,9 @@ MonoBehaviour:
   BulletPrefab: {fileID: 7252423528053236798, guid: 379f4878ed8bbe042b0c372c5c18232a,
     type: 3}
   FireRate: 5
+  MagSize: 30
+  AmmoLoaded: 0
+  AmmoCount: 1000
   NextTimeToFire: 0
 --- !u!1 &4409462515089822904
 GameObject:
@@ -1855,6 +1879,9 @@ MonoBehaviour:
   BulletPrefab: {fileID: 9065327850195104207, guid: 46286299e251e124b80dff7ce86c4c05,
     type: 3}
   FireRate: 2.5
+  MagSize: 45
+  AmmoLoaded: 0
+  AmmoCount: 1000
   NextTimeToFire: 0
 --- !u!1 &4789879952170666862
 GameObject:

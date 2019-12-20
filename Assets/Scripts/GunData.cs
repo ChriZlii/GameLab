@@ -15,6 +15,13 @@ public class GunData : MonoBehaviour
     //public float ShootingDistance = 100f;
     //public float Damage = 10f;
     public float FireRate = 10f;
+
+
+    [Header("Mag Data")]
+    public int MagSize = 15;
+    public int AmmoLoaded = 0;
+    public int AmmoCount = 1000;
+
     [HideInInspector]public float NextTimeToFire = 0;
 
 

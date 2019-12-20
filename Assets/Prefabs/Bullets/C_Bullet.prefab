@@ -59,6 +59,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -99,7 +100,7 @@ MonoBehaviour:
   syncInterval: 0.1
   Bulletinpact: {fileID: 2485986588240205421, guid: b1e1fe2ad30021141b4ff3d7ec27aebc,
     type: 3}
-  BulletSpeed: 10
+  BulletSpeed: 15
   MaxFlightDistance: 50
   PLAYERID: 0
   BulletDamage: 15
