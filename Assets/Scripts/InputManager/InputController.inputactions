@@ -68,6 +68,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "83e43bd9-deda-41de-b02a-d1956baab4e3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -255,6 +263,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5c943c0-e11a-405c-8363-e60b7af9c5bd",
+                    "path": "<Keyboard>/#(E)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1836a43-ecc1-4856-8886-2c2bd648032b",
+                    "path": "<Keyboard>/#(F)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
