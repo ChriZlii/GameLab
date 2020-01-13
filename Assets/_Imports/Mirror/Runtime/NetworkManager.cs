@@ -1188,13 +1188,19 @@ namespace Mirror
         /// This is invoked when a host is started.
         /// <para>StartHost has multiple signatures, but they all cause this hook to be called.</para>
         /// </summary>
-        public virtual void OnStartHost() { }
+        public virtual void OnStartHost() 
+        { 
+            Debug.Log("OnStartHost"); 
+        }
 
         /// <summary>
         /// This is invoked when a server is started - including when a host is started.
         /// <para>StartServer has multiple signatures, but they all cause this hook to be called.</para>
         /// </summary>
-        public virtual void OnStartServer() { }
+        public virtual void OnStartServer() 
+        {
+            Debug.Log("OnStartServer");
+        }
 
         /// <summary>
         /// Obsolete: Use <see cref="OnStartClient()"/> instead of OnStartClient(NetworkClient client).

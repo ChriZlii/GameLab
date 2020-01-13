@@ -1,22 +1,32 @@
 ﻿using Mirror;
 using System.Collections.Generic;
+using UnityEngine;
 
+[DisallowMultipleComponent]
+[RequireComponent(typeof(NetworkIdentity))]
 public class ItemManager : NetworkBehaviour
 {
 
     //Public
     public static List<ItemSpawnPoint> ItemSpawnPoints = new List<ItemSpawnPoint>();
 
+
+
     //Private
 
 
-    // diese funtion muss beim starten des hostes augerugfen werden    <-------
-    public void OnStartHost()
+
+    private void Awake()
+    {
+        ItemSpawnPoints = new List<ItemSpawnPoint>();
+    }
+
+
+    public void OnServerStart()
     {
         // only the server is permitted to spawn Items!
-        if (!isServer) return;
 
-        foreach (ItemSpawnPoint spawnpoint in ItemSpawnPoints)
+        foreach (ItemSpawnPoint spawnpoint in ItemManager.ItemSpawnPoints)
         {
             spawnpoint.SpawnRandomItem();
         }
@@ -32,7 +42,7 @@ public class ItemManager : NetworkBehaviour
 
     internal static void RegisterStartPosition(ItemSpawnPoint spawnpoint)
     {
-        ItemSpawnPoints.Add(spawnpoint);
+        ItemManager.ItemSpawnPoints.Add(spawnpoint);
     }
 
     internal static void UnRegisterStartPosition(ItemSpawnPoint spawnpoint)

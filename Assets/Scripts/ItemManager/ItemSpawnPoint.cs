@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,6 @@ public class ItemSpawnPoint : NetworkBehaviour
 
 
 
-
     //Public
     public GameObject Item;
 
@@ -28,7 +28,7 @@ public class ItemSpawnPoint : NetworkBehaviour
 
     //Private
 
-    
+
 
     public void Awake()
     {
@@ -48,24 +48,43 @@ public class ItemSpawnPoint : NetworkBehaviour
 
     public GameObject SpawnRandomItem()
     {
-        if (!isServer) return null; // only server permitts this action
 
-        float random = Random.value;
+        float random = UnityEngine.Random.value;
 
         Item = null;
 
-        foreach(ItemSpawnData data in SpawnableItems)
+        foreach (ItemSpawnData data in SpawnableItems)
         {
             random -= data.SpawnProbability;
 
             if (random <= 0)
             {
+                NetworkServer.Destroy(Item);
                 Item = Instantiate(data.Item, transform);
                 NetworkServer.Spawn(Item);
                 return Item;
             }
         }
+        return Item;
+    }
 
+
+    public GameObject SpawnItem(int ID)
+    {
+        if (!isServer) return null; // only server permitts this action
+
+        // Destroy old gameobject 
+        NetworkServer.Destroy(Item);
+
+        // Try to spawn an new Object
+        try
+        {
+            Item = Instantiate(SpawnableItems[ID].Item, transform);
+            NetworkServer.Spawn(Item);
+        }
+        catch (ArgumentOutOfRangeException) { }
+
+        
         return Item;
     }
 
