@@ -544,7 +544,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0.0000008142067, y: 6.323129e-19, z: 6337696, w: NaN}
+  m_BoundingSphereOverride: {x: 0, y: 4.8391076e+30, z: 1.7247627e+25, w: 3878.9658}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -653,11 +653,11 @@ MonoBehaviour:
   Item: {fileID: 0}
   SpawnableItems:
   - Item: {fileID: 6181888441347688048, guid: e4034a251882c26448cd0a2ab501117b, type: 3}
-    SpawnProbability: 0.3333
+    SpawnProbability: 0
   - Item: {fileID: 3535800284688102440, guid: 7f782938596f43c4abb3d99af93be24a, type: 3}
-    SpawnProbability: 0.3333
+    SpawnProbability: 1
   - Item: {fileID: 3309281120760925261, guid: 7521d54f1fc6658469cbcd6b53543eb9, type: 3}
-    SpawnProbability: 0.3333
+    SpawnProbability: 0
 --- !u!1 &1643873070
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,8 +39,16 @@ public class BulletScript : NetworkBehaviour
         GameObject inpact = Instantiate(Bulletinpact, transform.position, Quaternion.LookRotation(transform.forward));
 
         // if is Player, tage damage from bullet
-        if (other.gameObject.CompareTag("Player")) 
+        if (other.gameObject.CompareTag("Player"))
+        {
             other.gameObject.SendMessage("TakeDamageFromBullet", BulletDamage);
+        }
+        else if (other.gameObject.CompareTag("DestroyableItem"))
+        {
+            if (!isServer) return;
+            other.gameObject.SendMessage("TakeDamage", BulletDamage);
+        }
+            
 
         Destroy(inpact, 2f);
 

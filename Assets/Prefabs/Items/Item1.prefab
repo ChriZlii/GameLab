@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 5460696397320541473}
   - component: {fileID: 3827258133341680150}
   - component: {fileID: 6694821508088981866}
+  - component: {fileID: 5673673146400243363}
   m_Layer: 0
   m_Name: Item1
-  m_TagString: Untagged
+  m_TagString: DestroyableItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,3 +125,18 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   compressRotation: 1
+--- !u!114 &5673673146400243363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181888441347688048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80674337d0fdff142ac898a6eac4fc42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  Health: 100
