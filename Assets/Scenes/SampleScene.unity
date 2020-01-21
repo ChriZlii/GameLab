@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverOnly: 1
+  serverOnly: 0
   m_AssetId: 
   m_SceneId: 4294892419
 --- !u!1 &642051028
@@ -544,7 +544,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.16e-43, y: -2.2777335e+30, z: 5.16e-43, w: 1.28e-43}
+  m_BoundingSphereOverride: {x: 0.0000008142067, y: 6.323129e-19, z: 6337696, w: NaN}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -630,7 +630,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519348577}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.61, y: 1, z: 0.33333334}
+  m_LocalPosition: {x: 1, y: 1, z: 0}
   m_LocalScale: {x: 0.1, y: 1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 642051032}
@@ -764,7 +764,9 @@ MonoBehaviour:
   - {fileID: 3225238819807902073, guid: a5c2f5d0e84d85345ab598905544aa30, type: 3}
   - {fileID: 7252423528053236798, guid: 379f4878ed8bbe042b0c372c5c18232a, type: 3}
   - {fileID: 2975396195604681419, guid: c04e12c37f6689d448a037600f9de464, type: 3}
-  - {fileID: 4065691969833171992, guid: e4034a251882c26448cd0a2ab501117b, type: 3}
+  - {fileID: 6181888441347688048, guid: e4034a251882c26448cd0a2ab501117b, type: 3}
+  - {fileID: 3535800284688102440, guid: 7f782938596f43c4abb3d99af93be24a, type: 3}
+  - {fileID: 3309281120760925261, guid: 7521d54f1fc6658469cbcd6b53543eb9, type: 3}
 --- !u!4 &1643873074
 Transform:
   m_ObjectHideFlags: 0

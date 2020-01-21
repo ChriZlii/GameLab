@@ -59,8 +59,8 @@ public class ItemSpawnPoint : NetworkBehaviour
 
             if (random <= 0)
             {
-                NetworkServer.Destroy(Item);
-                Item = Instantiate(data.Item, transform);
+                //NetworkServer.Destroy(Item);
+                Item = Instantiate(original:data.Item, position:transform.position, rotation:transform.rotation);
                 NetworkServer.Spawn(Item);
                 return Item;
             }

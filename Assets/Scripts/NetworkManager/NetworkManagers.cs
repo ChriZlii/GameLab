@@ -6,11 +6,12 @@ using Mirror;
 public class NetworkManagers : NetworkManager
 {
     // Wrapper klasse für den vorhandenen Networkmanager.
-    // Wird irgendwann zum eigenen Networkmanager gemacht!!!
+    // Wird irgendwann zum eigenen Networkmanager erweitert!!!
 
 
     public override void OnStartServer()
     {
+
         //Find all Manager
         ItemManager[] itemManager = Resources.FindObjectsOfTypeAll<ItemManager>();
 
@@ -20,7 +21,6 @@ public class NetworkManagers : NetworkManager
             itemManager[0].OnServerStart();
         }
     }
-
 
 
 

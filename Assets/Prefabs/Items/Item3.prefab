@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3245940924272982298}
   - component: {fileID: 570872803989581763}
   - component: {fileID: 1725914466814409885}
+  - component: {fileID: -9170306142532579309}
+  - component: {fileID: 109175063262075022}
   m_Layer: 0
   m_Name: Item3
   m_TagString: Untagged
@@ -95,3 +97,30 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   m_SceneId: 0
+--- !u!114 &-9170306142532579309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3309281120760925261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfaa0e3c964635c4e9a4e79491313de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &109175063262075022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3309281120760925261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0
+  compressRotation: 1
