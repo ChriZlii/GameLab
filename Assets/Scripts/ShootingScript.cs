@@ -110,7 +110,7 @@ public class ShootingScript : NetworkBehaviour
         GameObject _SelectedWeapon = _player.GetComponent<WeaponholderScript>().SelectedWeapon;
         GunData _gundata = _SelectedWeapon.GetComponent<GunData>();
 
-        GameObject _Bullet = Instantiate(_gundata.BulletPrefab, _gundata.WeabonMuzzle.transform.position, _gundata.WeabonMuzzle.transform.rotation);
+        GameObject _Bullet = Instantiate(_gundata.BulletPrefab, _gundata.WeaponMuzzle.transform.position, _gundata.WeaponMuzzle.transform.rotation);
 
         BulletScript _BullData = _Bullet.GetComponent<BulletScript>();
         // Bug Workaround ClickUp ID #2jj8b0

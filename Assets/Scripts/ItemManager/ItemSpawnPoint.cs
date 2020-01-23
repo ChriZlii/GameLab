@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -9,7 +10,7 @@ using UnityEngine;
 
 public class ItemSpawnPoint : NetworkBehaviour
 {
-    //Fields
+    //Fields--------------------------------------------------------------------------
     [System.Serializable]
     public struct ItemSpawnData
     {
@@ -20,13 +21,16 @@ public class ItemSpawnPoint : NetworkBehaviour
 
 
 
-    //Public
+    //Public--------------------------------------------------------------------------
+    [HideInInspector]
     public GameObject Item;
+    
 
     public List<ItemSpawnData> SpawnableItems;
 
 
-    //Private
+    //Private-------------------------------------------------------------------------
+
 
 
 
@@ -41,6 +45,25 @@ public class ItemSpawnPoint : NetworkBehaviour
     }
 
 
+
+
+
+
+    // if someone enters the trigger. he gets the item from spawnpoint.
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            NetworkServer.Destroy(Item);
+
+            WeaponholderScript weaponholderscript = other.gameObject.GetComponent<WeaponholderScript>();
+
+            if (Item == PrefabUtility.GetCorrespondingObjectFromSource(weaponholderscript.SelectedWeapon))
+            {
+
+            }
+        }
+    }
 
 
 

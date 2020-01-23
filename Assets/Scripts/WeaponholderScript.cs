@@ -53,26 +53,16 @@ public class WeaponholderScript : NetworkBehaviour
             if (!isLocalPlayer) return;
             // only weaponholder----------------------------------------------------------------------------------------------
 
-
-
             int weaponNumber = selectedWeaponNum;
             float scrollwheelInput = controls.Player.SwitchWeapons.ReadValue<Vector2>().y;
 
             if (scrollwheelInput > 0)
             {
-                weaponNumber++;
-                if (weaponNumber == Weaponholder.transform.childCount)
-                {
-                    weaponNumber = 0;
-                }
+                incrementWeaponNumber(ref weaponNumber);
             }
             else if (scrollwheelInput < 0)
             {
-                weaponNumber--;
-                if (weaponNumber == -1)
-                {
-                    weaponNumber = Weaponholder.transform.childCount - 1;
-                }
+                decrementWeaponNumber(ref weaponNumber);
             }
 
 
@@ -82,11 +72,69 @@ public class WeaponholderScript : NetworkBehaviour
                 selectedWeaponNum = weaponNumber;
                 CmdSelectetWeapon(weaponNumber);
             }
-
-
-            
         }
     }
+
+
+    // increments the weaponnumber and check if the player has the weapon
+    private void incrementWeaponNumber( ref int weaponNumber)
+    {
+        //incrementWeaponNumber weapon in circle
+        weaponNumber++;
+        if (weaponNumber == Weaponholder.transform.childCount)
+        {
+            weaponNumber = 0;
+        }
+
+        //check if play has the weapon
+        if (!this.hasWeapon(weaponNumber))
+        {
+            incrementWeaponNumber(ref weaponNumber);
+        }
+    }
+
+    // decrements the weaponnumber and check if the player has the weapon
+    private void decrementWeaponNumber( ref int weaponNumber)
+    {
+        //decrementWeaponNumber weapon in circle
+        weaponNumber--;
+        if (weaponNumber == -1)
+        {
+            weaponNumber = Weaponholder.transform.childCount - 1;
+        }
+
+        //check if play has the weapon
+        if (!this.hasWeapon(weaponNumber))
+        {
+            decrementWeaponNumber(ref weaponNumber);
+        }
+    }
+
+
+
+    // returns true if the player has the weapon with number
+    bool hasWeapon(int weaponNumber)
+    {
+        int count = 0;
+        foreach (Transform weapon in Weaponholder.transform)
+        {
+            if (count++ == weaponNumber)
+            {
+                if (weapon.gameObject.activeInHierarchy)
+                {
+                    //Debug.Log("Has weapon");
+                    return true;
+                }
+                else
+                {
+                    //Debug.Log("Has not weapon");
+                    return false;
+                }
+            }
+        }
+        throw new System.ArgumentException("Some Error in Weaponswitching occours!!", "Weapon");
+    }
+
 
 
     void SelectWeapon()
@@ -96,12 +144,12 @@ public class WeaponholderScript : NetworkBehaviour
         {
             if (count++ == selectedWeaponNum)
             {
-                weapon.gameObject.SetActive(true);
+                weapon.GetComponent<GunData>().Weapon.SetActive(true);
                 SelectedWeapon = weapon.gameObject;
             }
             else
             {
-                weapon.gameObject.SetActive(false);
+                weapon.GetComponent<GunData>().Weapon.SetActive(false);
             }
         }
 
