@@ -16,11 +16,11 @@ public class HealthScript : NetworkBehaviour
 
     // Called from bullet in impact. 
     // Calls the shieldhealt und health update funkction.
-    public void TakeDamageFromBullet(float damage)
+    public void TakeDamage(float damage)
     {
         if (!isLocalPlayer) return;
 
-        TakeDamage(TakeShieldDamage(damage));
+        TakeDamageHealth(TakeShieldDamageHealth(damage));
     }
 
 
@@ -29,7 +29,7 @@ public class HealthScript : NetworkBehaviour
 
     // Calc the new ShieldHealth after bulletimpact.
     //returns the rest damage when damage is heigher then shieldhealth
-    private float TakeShieldDamage(float damage)
+    private float TakeShieldDamageHealth(float damage)
     {
         //if Shield is disabled, return damage value 
         if (!this.ShieldEnabled)
@@ -44,11 +44,13 @@ public class HealthScript : NetworkBehaviour
         if (this.ShieldHealth > damage)
         {
             MyShieldHealth = this.ShieldHealth - damage;
+            ShieldHealth = MyShieldHealth;// if is server CmdCall will fail
             CmdUpdateShieldHealth(MyShieldHealth);
         }
         else
         {
             RestDamage = damage - this.ShieldHealth;
+            ShieldHealth = 0;// if is server CmdCall will fail
             CmdUpdateShieldHealth(0);
         }
 
@@ -57,18 +59,20 @@ public class HealthScript : NetworkBehaviour
 
     // clacs the new health value from player, after bullet impact.
     // retruns the rest damage, when damage is heigher then healt.
-    private float TakeDamage(float damage)
+    private float TakeDamageHealth(float damage)
     {
         float MyHealth = 0;
         float RestDamage = 0;
         if (this.Health > damage)
         {
             MyHealth = this.Health - damage;
+            Health = MyHealth; // if is server CmdCall will fail
             CmdUpdateHealth(MyHealth);
         }
         else
         {
             RestDamage = damage - this.Health;
+            Health = 0;
             CmdUpdateHealth(0);
         }
 

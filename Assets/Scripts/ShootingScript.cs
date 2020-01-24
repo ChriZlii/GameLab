@@ -57,9 +57,9 @@ public class ShootingScript : NetworkBehaviour
 
         if (gunData.AmmoLoaded > 0)
         {
-            //Shoutinganimation
-            //Shoutingsound
-            Cmd_Shoot(netId);
+            //Shouting Animation
+            //Shouting Sound
+            ShootRayCast();
             gunData.AmmoLoaded--;
         }
         else
@@ -70,8 +70,8 @@ public class ShootingScript : NetworkBehaviour
             }
             else
             {
-                //Shoutinganimation
-                //Shoutingsound without bullet
+                //Shouting Animation
+                //Shouting Sound without bullet
             }
         }
     }
@@ -86,7 +86,7 @@ public class ShootingScript : NetworkBehaviour
 
         if (gunData.AmmoCount <= 0) return;
 
-        //Relaod animation
+        //Relaod Animation
 
         int loadamount = gunData.MagSize - gunData.AmmoLoaded;
 
@@ -103,22 +103,16 @@ public class ShootingScript : NetworkBehaviour
     }
 
 
-    [Command]
-    public void Cmd_Shoot(uint PlayerNetID)
+
+    
+    public void ShootRayCast()
     {
-        GameObject _player = NetworkIdentity.spawned[PlayerNetID].gameObject;
-        GameObject _SelectedWeapon = _player.GetComponent<WeaponholderScript>().SelectedWeapon;
-        GunData _gundata = _SelectedWeapon.GetComponent<GunData>();
+        GameObject player = gameObject;
+        GameObject SelectedWeapon = weaponholder.SelectedWeapon;
+        GunData gundata = SelectedWeapon.GetComponent<GunData>();
 
-        GameObject _Bullet = Instantiate(_gundata.BulletPrefab, _gundata.WeaponMuzzle.transform.position, _gundata.WeaponMuzzle.transform.rotation);
-
-        BulletScript _BullData = _Bullet.GetComponent<BulletScript>();
-        // Bug Workaround ClickUp ID #2jj8b0
-        //_BullData.BulletDamage = _gundata.Damage;
-        //_BullData.MaxFlightDistance = _gundata.ShootingDistance;
-        //_BullData.PLAYERID = PlayerNetID;
-
-        NetworkServer.Spawn(_Bullet);
+        //TODO here shooting RayCast!
+        Debug.LogWarning("implementing RayCast missing");
 
         //Rpc_ShootDebug(PlayerNetID);
     }
