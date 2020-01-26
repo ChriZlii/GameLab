@@ -54,14 +54,7 @@ public class ItemSpawnPoint : NetworkBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            NetworkServer.Destroy(Item);
-
-            WeaponholderScript weaponholderscript = other.gameObject.GetComponent<WeaponholderScript>();
-
-            if (Item == PrefabUtility.GetCorrespondingObjectFromSource(weaponholderscript.SelectedWeapon))
-            {
-
-            }
+            
         }
     }
 

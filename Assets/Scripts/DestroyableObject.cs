@@ -10,9 +10,50 @@ public class DestroyableObject : NetworkBehaviour
 
 
 
+
+
+
+
+
+    // Messagereceiver for all Hitmasages.
+    // sends call to server who calls every client
+    // data in list: [0] EnemyNetID, [i] Damage
+    public void Msg_HIT(List<object> data)
+    {
+        if (isServer)
+        {
+            Rpc_HIT((uint)data[0], (float)data[1]);
+            TakeDamage((float)data[1]);
+        }
+        else
+        {
+            Rpc_HIT((uint)data[0], (float)data[1]);
+            Cmd_HIT((uint)data[0], (float)data[1]);
+        }
+    }
+
+
+    // calcs new Healthvalue and calls every client.
+
+    [Command]
+    private void Cmd_HIT(uint HitFromID, float Damage)
+    {
+        TakeDamage(Damage); 
+    }
+
+    // Client call when an hit msg is received
+    [ClientRpc]
+    private void Rpc_HIT(uint HitFromID, float Damage)
+    {
+        // hit Animation
+    }
+
+
+
+
     // Called from bullet in impact. 
     // Calls the TakeDamage funcrion on the server.
-    public void TakeDamage(float damage)
+    private void TakeDamage(float damage)
     {
         if (!isServer) return;
 

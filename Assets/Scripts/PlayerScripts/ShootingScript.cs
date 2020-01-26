@@ -1,4 +1,6 @@
 ﻿using Mirror;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(NetworkIdentity))]
@@ -59,6 +61,8 @@ public class ShootingScript : NetworkBehaviour
         {
             //Shouting Animation
             //Shouting Sound
+            //MuzzleFlash
+
             ShootRayCast();
             gunData.AmmoLoaded--;
         }
@@ -70,7 +74,6 @@ public class ShootingScript : NetworkBehaviour
             }
             else
             {
-                //Shouting Animation
                 //Shouting Sound without bullet
             }
         }
@@ -107,15 +110,80 @@ public class ShootingScript : NetworkBehaviour
     
     public void ShootRayCast()
     {
+        
+
         GameObject player = gameObject;
         GameObject SelectedWeapon = weaponholder.SelectedWeapon;
         GunData gundata = SelectedWeapon.GetComponent<GunData>();
 
-        //TODO here shooting RayCast!
-        Debug.LogWarning("implementing RayCast missing");
 
-        //Rpc_ShootDebug(PlayerNetID);
+        Ray ray = new Ray(gundata.WeaponMuzzle.transform.position, gundata.WeaponMuzzle.transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, gundata.ShootingDistance))
+        {
+            //spawn/despawn impact
+            //GameObject bulletImpact = Instantiate(gundata.BulletImpact, position: hit.point, Quaternion.LookRotation(hit.normal));
+            Quaternion quant = Quaternion.LookRotation(hit.normal);
+            CmdSpawnImpact(netId, hit.point.x, hit.point.y, hit.point.z, quant.eulerAngles.x, quant.eulerAngles.y, quant.eulerAngles.z);
+            
+
+            // call hit function
+            List<object> messageData = new List<object>();
+            messageData.Add(player.GetComponent<NetworkIdentity>().netId);
+            messageData.Add(gundata.Damage);
+            
+            // send command message if there is an receiver
+            hit.collider.SendMessage("Msg_HIT", messageData, SendMessageOptions.DontRequireReceiver);
+
+            Debug.Log(hit.collider.gameObject.name);
+
+
+            Debug.DrawRay(gundata.WeaponMuzzle.transform.position, gundata.WeaponMuzzle.transform.forward * hit.distance, Color.blue);
+        }
+        else
+        {
+            Debug.DrawRay(gundata.WeaponMuzzle.transform.position, gundata.WeaponMuzzle.transform.forward * hit.distance, Color.red);
+        }
     }
+
+    
+    
+    
+    
+    
+    IEnumerator DespawnAfter1s(uint netID)
+    {
+        yield return new WaitForSeconds(1f);
+        CmdDespawn(netID);
+    }
+
+
+    [Command]
+    private void CmdSpawnImpact(uint netID, float x, float y, float z, float eulerx, float eulery, float eulerz)
+    {
+        GameObject player = NetworkIdentity.spawned[netID].gameObject;
+        GameObject SelectedWeapon = weaponholder.SelectedWeapon;
+        GunData gundata = SelectedWeapon.GetComponent<GunData>();
+
+        GameObject impact = Instantiate(gundata.BulletImpact, new Vector3(x, y, z), Quaternion.Euler(eulerx, eulery, eulerz));
+
+        NetworkServer.Spawn(impact);
+
+        StartCoroutine("DespawnAfter1s", impact.GetComponent<NetworkIdentity>().netId);
+    }
+
+    [Command]
+    private void CmdDespawn(uint netID)
+    {
+        GameObject gm = NetworkIdentity.spawned[netID].gameObject;
+        NetworkServer.Destroy(gm);
+    }
+
+
+
+
+
 
     [ClientRpc]
     public void Rpc_ShootDebug(uint PlayerNetID)

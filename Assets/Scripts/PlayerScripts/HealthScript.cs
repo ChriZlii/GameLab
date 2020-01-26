@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthScript : NetworkBehaviour
@@ -14,20 +15,51 @@ public class HealthScript : NetworkBehaviour
 
 
 
-    // Called from bullet in impact. 
-    // Calls the shieldhealt und health update funkction.
-    public void TakeDamage(float damage)
+
+
+
+
+
+    // Messagereceiver for all Hitmasages.
+    // sends call to server who calls every client
+    public void Msg_HIT(List<object> data)
     {
+        if (isServer)
+        {
+            Rpc_HIT((uint)data[0], (float)data[1]);
+        }
+        else
+        {
+            Cmd_HIT((uint)data[0], (float)data[1]);
+        }
+    }
+
+
+    // calls every client.
+    [Command]
+    public void Cmd_HIT(uint HitFromID, float Damage)
+    {
+        Rpc_HIT(HitFromID, Damage);
+    }
+
+    // Client call when an hit msg is received
+    [ClientRpc]
+    public void Rpc_HIT(uint HitFromID, float Damage)
+    {
+        // hit Animation
+
         if (!isLocalPlayer) return;
 
-        TakeDamageHealth(TakeShieldDamageHealth(damage));
+        TakeDamageHealth(TakeShieldDamageHealth(Damage));
     }
 
 
 
 
 
-    // Calc the new ShieldHealth after bulletimpact.
+
+
+    //Calc the new ShieldHealth after bulletimpact.
     //returns the rest damage when damage is heigher then shieldhealth
     private float TakeShieldDamageHealth(float damage)
     {
@@ -112,12 +144,14 @@ public class HealthScript : NetworkBehaviour
 
 
 
-
+    // updates the Healt on every Client over SyncVar
     [Command]
     public void CmdUpdateHealth(float health)
     {
         this.Health = health;
     }
+
+    // updates the Healt on every Client over SyncVar
     [Command]
     public void CmdUpdateShieldHealth(float shieldhealth)
     {
@@ -125,18 +159,5 @@ public class HealthScript : NetworkBehaviour
     }
 
 
-
-
-
-
-
-    [Command]
-    public void Cmd_Debug(float obj) => Rpc_Debug(obj);
-
-    [ClientRpc]
-    public void Rpc_Debug(float obj)
-    {
-        Debug.Log(obj);
-    }
 
 }
