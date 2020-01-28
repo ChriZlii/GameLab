@@ -17,10 +17,7 @@ public class HealthScript : NetworkBehaviour
 
 
 
-
-
-
-    // Messagereceiver for all Hitmasages.
+    // Messagereceiver for all Hitmasages. needed to be called from Server
     // sends call to server who calls every client
     public void Msg_HIT(List<object> data)
     {
@@ -28,19 +25,11 @@ public class HealthScript : NetworkBehaviour
         {
             Rpc_HIT((uint)data[0], (float)data[1]);
         }
-        else
-        {
-            Cmd_HIT((uint)data[0], (float)data[1]);
-        }
+        else throw new UnityException("Call from Client, only enabled for Server/Host"); 
     }
 
 
-    // calls every client.
-    [Command]
-    public void Cmd_HIT(uint HitFromID, float Damage)
-    {
-        Rpc_HIT(HitFromID, Damage);
-    }
+
 
     // Client call when an hit msg is received
     [ClientRpc]

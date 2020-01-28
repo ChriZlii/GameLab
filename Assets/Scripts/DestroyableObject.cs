@@ -16,6 +16,7 @@ public class DestroyableObject : NetworkBehaviour
 
 
     // Messagereceiver for all Hitmasages.
+    // needed to be called from server!
     // sends call to server who calls every client
     // data in list: [0] EnemyNetID, [i] Damage
     public void Msg_HIT(List<object> data)
@@ -25,11 +26,7 @@ public class DestroyableObject : NetworkBehaviour
             Rpc_HIT((uint)data[0], (float)data[1]);
             TakeDamage((float)data[1]);
         }
-        else
-        {
-            Rpc_HIT((uint)data[0], (float)data[1]);
-            Cmd_HIT((uint)data[0], (float)data[1]);
-        }
+        else throw new UnityException("Call from Client, only enabled for Server/Host");
     }
 
 

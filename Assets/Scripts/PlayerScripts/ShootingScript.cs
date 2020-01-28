@@ -107,10 +107,10 @@ public class ShootingScript : NetworkBehaviour
 
 
 
-    
+
     public void ShootRayCast()
     {
-        
+
 
         GameObject player = gameObject;
         GameObject SelectedWeapon = weaponholder.SelectedWeapon;
@@ -126,32 +126,36 @@ public class ShootingScript : NetworkBehaviour
             //GameObject bulletImpact = Instantiate(gundata.BulletImpact, position: hit.point, Quaternion.LookRotation(hit.normal));
             Quaternion quant = Quaternion.LookRotation(hit.normal);
             CmdSpawnImpact(netId, hit.point.x, hit.point.y, hit.point.z, quant.eulerAngles.x, quant.eulerAngles.y, quant.eulerAngles.z);
-            
 
-            // call hit function
-            List<object> messageData = new List<object>();
-            messageData.Add(player.GetComponent<NetworkIdentity>().netId);
-            messageData.Add(gundata.Damage);
-            
-            // send command message if there is an receiver
-            hit.collider.SendMessage("Msg_HIT", messageData, SendMessageOptions.DontRequireReceiver);
+            //notify hitted component to be hitted (only items with networkidentity have syncroniced Health, so only they can be hitten)
+            NetworkIdentity identityPlayerHit = hit.collider.GetComponent<NetworkIdentity>();
+            if (identityPlayerHit != null)
+            {
+                Cmd_Hit(this.netId, identityPlayerHit.netId, gundata.Damage);
+            }
 
-            Debug.Log(hit.collider.gameObject.name);
-
-
-            Debug.DrawRay(gundata.WeaponMuzzle.transform.position, gundata.WeaponMuzzle.transform.forward * hit.distance, Color.blue);
+            Debug.DrawRay(gundata.WeaponMuzzle.transform.position, gundata.WeaponMuzzle.transform.forward * hit.distance, Color.blue, 2f);
         }
         else
         {
-            Debug.DrawRay(gundata.WeaponMuzzle.transform.position, gundata.WeaponMuzzle.transform.forward * hit.distance, Color.red);
+            Debug.DrawRay(gundata.WeaponMuzzle.transform.position, gundata.WeaponMuzzle.transform.forward * gundata.ShootingDistance, Color.red, 1f);
         }
     }
 
-    
-    
-    
-    
-    
+
+
+
+
+    [Command]
+    private void Cmd_Hit(uint netIDFrom, uint netIDTo, float damage)
+    {
+        List<object> messageData = new List<object>();
+        messageData.Add(netIDFrom);
+        messageData.Add(damage);
+        NetworkIdentity.spawned[netIDTo].gameObject.SendMessage("Msg_HIT", messageData, SendMessageOptions.RequireReceiver);
+    }
+
+
     IEnumerator DespawnAfter1s(uint netID)
     {
         yield return new WaitForSeconds(1f);
@@ -185,11 +189,6 @@ public class ShootingScript : NetworkBehaviour
 
 
 
-    [ClientRpc]
-    public void Rpc_ShootDebug(uint PlayerNetID)
-    {
-        Debug.Log("Shooting PlayerID:" + PlayerNetID);
-    }
 }
 
 
