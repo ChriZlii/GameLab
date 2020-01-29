@@ -23,24 +23,17 @@ public class DestroyableObject : NetworkBehaviour
     {
         if (isServer)
         {
-            Rpc_HIT((uint)data[0], (float)data[1]);
+            Rpc_HIT(/*(uint)data[0], (float)data[1]*/);
             TakeDamage((float)data[1]);
         }
         else throw new UnityException("Call from Client, only enabled for Server/Host");
     }
 
 
-    // calcs new Healthvalue and calls every client.
-
-    [Command]
-    private void Cmd_HIT(uint HitFromID, float Damage)
-    {
-        TakeDamage(Damage); 
-    }
 
     // Client call when an hit msg is received
     [ClientRpc]
-    private void Rpc_HIT(uint HitFromID, float Damage)
+    private void Rpc_HIT(/*uint HitFromID, float Damage*/)
     {
         // hit Animation
     }

@@ -179,13 +179,13 @@ public class WeaponholderScript : NetworkBehaviour
     // True gives player weapon, false takes is away
     // returns true if successfull, falls if player has allredy
     [ClientRpc]
-    public void RpcGiveWeapon(int weaponNumber, bool state = true)
+    public void RpcGiveWeapon(int weaponNumber, bool state)
     {
         GameObject weapon = Weapons[weaponNumber];
         weapon.SetActive(state);
     }
     [Command]
-    public void CmdGiveWeapon(int weaponNumber, bool state = true) => RpcGiveWeapon(weaponNumber, state);
+    public void CmdGiveWeapon(int weaponNumber, bool state ) => RpcGiveWeapon(weaponNumber, state);
 
     public void Msg_GiveWeapon(List<object> messageData)
     {
