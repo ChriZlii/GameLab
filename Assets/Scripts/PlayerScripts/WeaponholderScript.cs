@@ -8,19 +8,25 @@ public class WeaponholderScript : NetworkBehaviour
 
     // Publics------------------------------------------------------------------------------------------------------
     public GameObject Weaponholder;
+
     public bool EnableManualSwitching = true;
 
-    [HideInInspector] public GameObject SelectedWeapon;
-
-    [SyncVar]
-    public int selectedWeaponNum = 0;
+    public WeaponTypes StartWeaponType = WeaponTypes.PISTOL;
 
     public GameObject[] Weapons;
 
 
+
+    [HideInInspector]
+    public GameObject SelectedWeapon;
+
+    [SyncVar]
+    [HideInInspector]
+    public int selectedWeaponNum = (int)WeaponTypes.PISTOL;
+
     // Privates------------------------------------------------------------------------------------------------------
     private InputController controls;
-    private int selectedWeaponPrevious = 1;
+    private int selectedWeaponPrevious = (int)WeaponTypes.PISTOL;
 
     // Fields--------------------------------------------------------------------------------------------------------
 
@@ -49,16 +55,14 @@ public class WeaponholderScript : NetworkBehaviour
             foreach (GameObject weapon in Weapons)
             {
                 WeaponTypes type = weapon.GetComponent<WeaponData>().weaponType;
-                RpcGiveWeapon((int)type, false);
+                GiveWeapon((int)type, false);
             }
         }
 
         //Give player one weapon
-        RpcGiveWeapon((int)WeaponTypes.PISTOL, true);
-        RpcGiveWeapon((int)WeaponTypes.RIFEL, true);
-
-        RpcGiveWeapon(selectedWeaponNum, true);
-        SelectWeapon(selectedWeaponNum);
+        if (isServer) RpcGiveWeapon((int)StartWeaponType, true);
+        else GiveWeapon((int)StartWeaponType, true);
+        SelectWeapon((int)StartWeaponType);
     }
 
 
@@ -185,13 +189,23 @@ public class WeaponholderScript : NetworkBehaviour
         GameObject weapon = Weapons[weaponNumber];
         weapon.SetActive(state);
     }
+
+    public void GiveWeapon(int weaponNumber, bool state)
+    {
+        if (isServer) { RpcGiveWeapon(weaponNumber, state); }
+        else
+        {
+            GameObject weapon = Weapons[weaponNumber];
+            weapon.SetActive(state);
+        }
+    }
+
     [Command]
-    public void CmdGiveWeapon(int weaponNumber, bool state) => RpcGiveWeapon(weaponNumber, state);
+    public void CmdGiveWeapon(int weaponNumber, bool state) => GiveWeapon(weaponNumber, state);
 
     public void Msg_GiveWeapon(List<object> messageData)
     {
-        if (isServer) { RpcGiveWeapon((int)messageData[0], (bool)messageData[1]); }
-        else { CmdGiveWeapon((int)messageData[0], (bool)messageData[1]); }
+        CmdGiveWeapon((int)messageData[0], (bool)messageData[1]);
 
         // if argument 2 is set, the item schould be despawnd. if not ther is an exeption and is will stay alife
         try { CmdDespawnNetID((uint)messageData[2]); }
