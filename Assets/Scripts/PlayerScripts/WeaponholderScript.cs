@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -185,12 +186,16 @@ public class WeaponholderScript : NetworkBehaviour
         weapon.SetActive(state);
     }
     [Command]
-    public void CmdGiveWeapon(int weaponNumber, bool state ) => RpcGiveWeapon(weaponNumber, state);
+    public void CmdGiveWeapon(int weaponNumber, bool state) => RpcGiveWeapon(weaponNumber, state);
 
     public void Msg_GiveWeapon(List<object> messageData)
     {
-        if (isServer) { RpcGiveWeapon((int)messageData[0],(bool) messageData[1]); }
+        if (isServer) { RpcGiveWeapon((int)messageData[0], (bool)messageData[1]); }
         else { CmdGiveWeapon((int)messageData[0], (bool)messageData[1]); }
+
+        // if argument 2 is set, the item schould be despawnd. if not ther is an exeption and is will stay alife
+        try { CmdDespawnNetID((uint)messageData[2]); }
+        catch (ArgumentOutOfRangeException) { }
         //else throw new UnityException("Call from Client, only enabled for Server/Host");
     }
 
@@ -202,6 +207,13 @@ public class WeaponholderScript : NetworkBehaviour
     public void CmdSelectetWeapon(int seletion)
     {
         this.selectedWeaponNum = seletion;
+    }
+
+    [Command]
+    public void CmdDespawnNetID(uint playerNetID)
+    {
+        GameObject obj = NetworkIdentity.spawned[(uint)playerNetID].gameObject;
+        NetworkServer.Destroy(obj);
     }
 
 }

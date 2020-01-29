@@ -7,25 +7,15 @@ public class GivePlayerWeapon : NetworkBehaviour
     //Public-----------------------------------------------------------------------------------
 
     public WeaponTypes weaponType;
+    public bool destroyOnUse = true;
 
     //Private----------------------------------------------------------------------------------
 
 
 
 
-    [Command]
-    public void CmdDespawn(uint playerNetID)
-    {
-        GameObject obj = NetworkIdentity.spawned[playerNetID].gameObject;
-
-        NetworkServer.Destroy(obj);
-    }
-
-
-
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.gameObject.CompareTag("Player"))
         {
             GameObject player = other.gameObject;
@@ -35,13 +25,13 @@ public class GivePlayerWeapon : NetworkBehaviour
             {
                 List<object> messageData = new List<object>
                 {
-                    weaponType,
-                    true
+                    weaponType,         // type of weapon
+                    true                // true = give / false = take ... weapon
                 };
+                if (destroyOnUse) messageData.Add(netId); // netid of the Item
 
                 player.SendMessage("Msg_GiveWeapon", messageData, SendMessageOptions.RequireReceiver);
 
-                CmdDespawn(netId);
             }
         }
     }
