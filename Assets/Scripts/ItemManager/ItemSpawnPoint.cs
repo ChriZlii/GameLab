@@ -49,17 +49,6 @@ public class ItemSpawnPoint : NetworkBehaviour
 
 
 
-    // if someone enters the trigger. he gets the item from spawnpoint.
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            
-        }
-    }
-
-
-
 
 
     public GameObject SpawnRandomItem()

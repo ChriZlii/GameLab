@@ -206,6 +206,7 @@ MonoBehaviour:
   MuzzleParticles: {fileID: 0}
   BulletImpact: {fileID: 2485986588240205421, guid: b1e1fe2ad30021141b4ff3d7ec27aebc,
     type: 3}
+  weaponType: 0
   ShootingDistance: 100
   Damage: 10
   FireRate: 1

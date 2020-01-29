@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunData : MonoBehaviour
+public class WeaponData : MonoBehaviour
 {
     public GameObject Weapon;
     public GameObject WeaponMuzzle;
@@ -11,6 +11,7 @@ public class GunData : MonoBehaviour
     public GameObject BulletImpact;
 
     [Header("Weapon Data")]
+    public WeaponTypes weaponType;
     public float ShootingDistance = 100f;
     public float Damage = 10f;
     public float FireRate = 10f;
@@ -23,5 +24,14 @@ public class GunData : MonoBehaviour
 
     [HideInInspector]public float NextTimeToFire = 0;
 
+    //Sturcturen--------------------------------------------------------------
+    
+}
 
+public enum WeaponTypes
+{
+    PISTOL,
+    RIFEL,
+    HEAVY,
+    SNIPER
 }

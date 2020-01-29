@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2784441723357076223}
   - component: {fileID: 2784441723357076222}
-  - component: {fileID: 2784441723357076217}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: ItemSpawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -54,16 +53,3 @@ MonoBehaviour:
     SpawnProbability: 1
   - Item: {fileID: 3309281120760925261, guid: 7521d54f1fc6658469cbcd6b53543eb9, type: 3}
     SpawnProbability: 0
---- !u!135 &2784441723357076217
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2784441723357076220}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}

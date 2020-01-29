@@ -16,12 +16,13 @@ public class ShootingScript : NetworkBehaviour
     //private GunData gunData = null;
 
 
-
     private void Awake()
     {
         weaponholder = GetComponent<WeaponholderScript>();
         controls = new InputController();
     }
+
+
     private void OnEnable() => controls.Player.Enable();
     private void OnDisable() => controls.Player.Disable();
 
@@ -33,7 +34,7 @@ public class ShootingScript : NetworkBehaviour
         if (!isLocalPlayer) return;
 
 
-        GunData gunData = weaponholder.SelectedWeapon.GetComponent<GunData>();
+        WeaponData gunData = weaponholder.SelectedWeapon.GetComponent<WeaponData>();
 
         // if nex time to fire is reached
         if (controls.Player.Shoot.ReadValue<float>() == 1 && Time.time >= gunData.NextTimeToFire)
@@ -54,7 +55,7 @@ public class ShootingScript : NetworkBehaviour
     }
 
 
-    private void Shoot(GunData gunData)
+    private void Shoot(WeaponData gunData)
     {
 
         if (gunData.AmmoLoaded > 0)
@@ -85,7 +86,7 @@ public class ShootingScript : NetworkBehaviour
 
         if (!isLocalPlayer) return;
 
-        GunData gunData = weaponholder.SelectedWeapon.GetComponent<GunData>();
+        WeaponData gunData = weaponholder.SelectedWeapon.GetComponent<WeaponData>();
 
         if (gunData.AmmoCount <= 0) return;
 
@@ -110,11 +111,9 @@ public class ShootingScript : NetworkBehaviour
 
     public void ShootRayCast()
     {
-
-
-        GameObject player = gameObject;
+        //GameObject player = gameObject;
         GameObject SelectedWeapon = weaponholder.SelectedWeapon;
-        GunData gundata = SelectedWeapon.GetComponent<GunData>();
+        WeaponData gundata = SelectedWeapon.GetComponent<WeaponData>();
 
 
         Ray ray = new Ray(gundata.WeaponMuzzle.transform.position, gundata.WeaponMuzzle.transform.forward);
@@ -149,9 +148,11 @@ public class ShootingScript : NetworkBehaviour
     [Command]
     private void Cmd_Hit(uint netIDFrom, uint netIDTo, float damage)
     {
-        List<object> messageData = new List<object>();
-        messageData.Add(netIDFrom);
-        messageData.Add(damage);
+        List<object> messageData = new List<object>
+        {
+            netIDFrom,
+            damage
+        };
         NetworkIdentity.spawned[netIDTo].gameObject.SendMessage("Msg_HIT", messageData, SendMessageOptions.RequireReceiver);
     }
 
@@ -159,16 +160,21 @@ public class ShootingScript : NetworkBehaviour
     IEnumerator DespawnAfter1s(uint netID)
     {
         yield return new WaitForSeconds(1f);
-        CmdDespawn(netID);
+        if (!isServer) CmdDespawn(netID);
+        else
+        {
+            GameObject gm = NetworkIdentity.spawned[netID].gameObject;
+            NetworkServer.Destroy(gm);
+        }
     }
 
 
     [Command]
     private void CmdSpawnImpact(uint netID, float x, float y, float z, float eulerx, float eulery, float eulerz)
     {
-        GameObject player = NetworkIdentity.spawned[netID].gameObject;
+        //GameObject player = NetworkIdentity.spawned[netID].gameObject;
         GameObject SelectedWeapon = weaponholder.SelectedWeapon;
-        GunData gundata = SelectedWeapon.GetComponent<GunData>();
+        WeaponData gundata = SelectedWeapon.GetComponent<WeaponData>();
 
         GameObject impact = Instantiate(gundata.BulletImpact, new Vector3(x, y, z), Quaternion.Euler(eulerx, eulery, eulerz));
 

@@ -1,27 +1,27 @@
 ﻿using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponholderScript : NetworkBehaviour
 {
 
-    // Publics
-    public GameObject Weaponholder = null;
-
+    // Publics------------------------------------------------------------------------------------------------------
+    public GameObject Weaponholder;
     public bool EnableManualSwitching = true;
 
+    [HideInInspector] public GameObject SelectedWeapon;
 
-    [HideInInspector] public GameObject SelectedWeapon = null;
-
-    [SyncVar] 
+    [SyncVar]
     public int selectedWeaponNum = 0;
 
-    
-    // Privates
-    private InputController controls = null;
-    private int selectedWeaponPrevious = 0;
+    public GameObject[] Weapons;
 
 
+    // Privates------------------------------------------------------------------------------------------------------
+    private InputController controls;
+    private int selectedWeaponPrevious = 1;
 
+    // Fields--------------------------------------------------------------------------------------------------------
 
 
     private void Awake() => controls = new InputController();
@@ -32,10 +32,35 @@ public class WeaponholderScript : NetworkBehaviour
 
     void Start()
     {
-        SelectWeapon();
+        // add Prefabs to Player
+        GameObject[] newWeapon = new GameObject[Weapons.Length];
+        foreach (GameObject weapon in Weapons)
+        {
+            WeaponTypes type = weapon.GetComponent<WeaponData>().weaponType;
+            newWeapon[(int)type] = Instantiate(weapon, Weaponholder.transform);
+        }
+        Weapons = newWeapon;
+
+
+        // remove all weapons from local player inventory.
+        if (isLocalPlayer)
+        {
+            foreach (GameObject weapon in Weapons)
+            {
+                WeaponTypes type = weapon.GetComponent<WeaponData>().weaponType;
+                RpcGiveWeapon((int)type, false);
+            }
+        }
+
+        //Give player one weapon
+        RpcGiveWeapon((int)WeaponTypes.PISTOL, true);
+        RpcGiveWeapon((int)WeaponTypes.RIFEL, true);
+
+        RpcGiveWeapon(selectedWeaponNum, true);
+        SelectWeapon(selectedWeaponNum);
     }
 
-    
+
     void Update()
     {
         if (EnableManualSwitching)
@@ -44,7 +69,7 @@ public class WeaponholderScript : NetworkBehaviour
             // is weapon changed, change the wepon in hand
             if (selectedWeaponNum != selectedWeaponPrevious)
             {
-                SelectWeapon();
+                SelectWeapon(selectedWeaponNum);
                 selectedWeaponPrevious = selectedWeaponNum;
             }
 
@@ -58,11 +83,11 @@ public class WeaponholderScript : NetworkBehaviour
 
             if (scrollwheelInput > 0)
             {
-                incrementWeaponNumber(ref weaponNumber);
+                IncrementWeaponNumber(ref weaponNumber);
             }
             else if (scrollwheelInput < 0)
             {
-                decrementWeaponNumber(ref weaponNumber);
+                DecrementWeaponNumber(ref weaponNumber);
             }
 
 
@@ -77,7 +102,7 @@ public class WeaponholderScript : NetworkBehaviour
 
 
     // increments the weaponnumber and check if the player has the weapon
-    private void incrementWeaponNumber( ref int weaponNumber)
+    private void IncrementWeaponNumber(ref int weaponNumber)
     {
         //incrementWeaponNumber weapon in circle
         weaponNumber++;
@@ -87,14 +112,14 @@ public class WeaponholderScript : NetworkBehaviour
         }
 
         //check if play has the weapon
-        if (!this.hasWeapon(weaponNumber))
+        if (!this.HasWeapon(weaponNumber))
         {
-            incrementWeaponNumber(ref weaponNumber);
+            IncrementWeaponNumber(ref weaponNumber);
         }
     }
 
     // decrements the weaponnumber and check if the player has the weapon
-    private void decrementWeaponNumber( ref int weaponNumber)
+    private void DecrementWeaponNumber(ref int weaponNumber)
     {
         //decrementWeaponNumber weapon in circle
         weaponNumber--;
@@ -104,56 +129,71 @@ public class WeaponholderScript : NetworkBehaviour
         }
 
         //check if play has the weapon
-        if (!this.hasWeapon(weaponNumber))
+        if (!this.HasWeapon(weaponNumber))
         {
-            decrementWeaponNumber(ref weaponNumber);
+            DecrementWeaponNumber(ref weaponNumber);
         }
     }
 
-
-
     // returns true if the player has the weapon with number
-    bool hasWeapon(int weaponNumber)
+    private bool HasWeapon(int weaponNumber)
     {
-        int count = 0;
-        foreach (Transform weapon in Weaponholder.transform)
+        GameObject weapon = Weapons[weaponNumber];
+
+        if (weapon.activeInHierarchy)
         {
-            if (count++ == weaponNumber)
-            {
-                if (weapon.gameObject.activeInHierarchy)
-                {
-                    //Debug.Log("Has weapon");
-                    return true;
-                }
-                else
-                {
-                    //Debug.Log("Has not weapon");
-                    return false;
-                }
-            }
+            //Debug.Log("Has weapon");
+            return true;
         }
+        else
+        {
+            //Debug.Log("Has not weapon");
+            return false;
+        }
+
         throw new System.ArgumentException("Some Error in Weaponswitching occours!!", "Weapon");
     }
 
-
-
-    void SelectWeapon()
+    // return true if successfull, flase if playser hasnt weapon.
+    public bool SelectWeapon(int weaponNumber)
     {
+        if (!HasWeapon(weaponNumber)) return false;
+
         int count = 0;
-        foreach (Transform weapon in Weaponholder.transform)
+
+        foreach (GameObject weapon in Weapons)
         {
-            if (count++ == selectedWeaponNum)
+            if (count++ == weaponNumber)
             {
-                weapon.GetComponent<GunData>().Weapon.SetActive(true);
-                SelectedWeapon = weapon.gameObject;
+                weapon.GetComponent<WeaponData>().Weapon.SetActive(true);
+                SelectedWeapon = weapon;
             }
             else
             {
-                weapon.GetComponent<GunData>().Weapon.SetActive(false);
+                weapon.GetComponent<WeaponData>().Weapon.SetActive(false);
             }
         }
-
+        return true;
     }
+
+    // True gives player weapon, false takes is away
+    // returns true if successfull, falls if player has allredy
+    [ClientRpc]
+    public void RpcGiveWeapon(int weaponNumber, bool state = true)
+    {
+        GameObject weapon = Weapons[weaponNumber];
+        weapon.SetActive(state);
+    }
+    [Command]
+    public void CmdGiveWeapon(int weaponNumber, bool state = true) => RpcGiveWeapon(weaponNumber, state);
+
+    public void Msg_GiveWeapon(List<object> messageData)
+    {
+        if (isServer) { RpcGiveWeapon((int)messageData[0],(bool) messageData[1]); }
+        else { CmdGiveWeapon((int)messageData[0], (bool)messageData[1]); }
+        //else throw new UnityException("Call from Client, only enabled for Server/Host");
+    }
+
 
 
 
