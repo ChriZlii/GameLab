@@ -56,7 +56,8 @@ public class ItemSpawnPoint : NetworkBehaviour
 
         float random = UnityEngine.Random.value;
 
-        Item = null;
+        // Destroy old gameobject 
+        NetworkServer.Destroy(Item);
 
         foreach (ItemSpawnData data in SpawnableItems)
         {
