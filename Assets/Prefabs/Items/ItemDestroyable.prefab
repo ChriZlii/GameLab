@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 5460696397320541473}
   - component: {fileID: 6694821508088981866}
   - component: {fileID: 5673673146400243363}
+  - component: {fileID: -6703561881012207907}
   m_Layer: 0
   m_Name: ItemDestroyable
-  m_TagString: DestroyableItem
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,3 +128,16 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   Health: 100
+--- !u!65 &-6703561881012207907
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181888441347688048}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 1.0000002, z: 1.0000004}
+  m_Center: {x: 0, y: 0, z: 0}

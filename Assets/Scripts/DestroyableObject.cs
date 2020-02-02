@@ -1,7 +1,6 @@
-﻿using System.Collections;
+﻿using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
 public class DestroyableObject : NetworkBehaviour
 {
@@ -45,41 +44,18 @@ public class DestroyableObject : NetworkBehaviour
     // Calls the TakeDamage funcrion on the server.
     private void TakeDamage(float damage)
     {
-        if (!isServer) return;
-
-
-        float MyHealth = this.Health;
-
-        if (MyHealth > damage)
+        if (isServer)
         {
-            MyHealth -= damage;
-        }
-        else
-        {
-            MyHealth = 0;
-        }
+            if (this.Health > damage)   { this.Health -= damage; }
+            else                        { this.Health = 0; }
 
-        this.Health = MyHealth;
-
-        if (MyHealth <= 0)
-        {
-            // Destroy Object.
-            NetworkManager.Destroy(gameObject);
+            if (this.Health <= 0)
+            {
+                // Destroy Object.
+                NetworkManager.Destroy(gameObject);
+            }
         }
-        CmdUpdateHealth(MyHealth);
     }
-
-    
-    // calcs the new health value from player, after bullet impact.
-    // retruns the rest damage, when damage is heigher then healt.
-    [Command]
-    private void CmdUpdateHealth(float health)
-    {
-        this.Health = health;
-    }
-
-
-
 
 
 
