@@ -210,13 +210,7 @@ public class WeaponholderScript : NetworkBehaviour, IPlayerActions
 
 
 
-
-
-
-
-
-
-    // Unused InputSystemCallbacks in this File
+    #region Unused InputSystemCallbacks in this File
 
     public void OnJump(InputAction.CallbackContext context) { }
 
@@ -233,4 +227,6 @@ public class WeaponholderScript : NetworkBehaviour, IPlayerActions
     public void OnReload(InputAction.CallbackContext context) { }
 
     public void OnInteract(InputAction.CallbackContext context) { }
+
+    #endregion
 }
