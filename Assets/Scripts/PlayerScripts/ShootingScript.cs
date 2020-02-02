@@ -127,8 +127,8 @@ public class ShootingScript : NetworkBehaviour
             CmdSpawnImpact(netId, hit.point.x, hit.point.y, hit.point.z, quant.eulerAngles.x, quant.eulerAngles.y, quant.eulerAngles.z);
 
             //notify hitted component to be hitted (only items with networkidentity have syncroniced Health, so only they can be hitten)
-            NetworkIdentity identityPlayerHit = hit.collider.GetComponent<NetworkIdentity>();
-            if (identityPlayerHit != null)
+            NetworkIdentity identityPlayerHit;
+            if (hit.collider.TryGetComponent(out identityPlayerHit))
             {
                 Cmd_Hit(this.netId, identityPlayerHit.netId, gundata.Damage);
             }
