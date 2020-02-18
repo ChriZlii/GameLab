@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static InputController;
 
-public class WeaponholderScript : NetworkBehaviour
+public class WeaponholderScript : NetworkBehaviour, IPlayerActions
 {
 
     // Publics------------------------------------------------------------------------------------------------------
@@ -20,18 +22,20 @@ public class WeaponholderScript : NetworkBehaviour
     [HideInInspector]
     public GameObject SelectedWeapon;
 
-    [SyncVar]
     [HideInInspector]
+    [SyncVar(hook = nameof(OnChangeWeapon))]
     public int selectedWeaponNum = (int)WeaponTypes.PISTOL;
 
     // Privates------------------------------------------------------------------------------------------------------
     private InputController controls;
     private int selectedWeaponPrevious = (int)WeaponTypes.PISTOL;
 
-    // Fields--------------------------------------------------------------------------------------------------------
 
-
-    private void Awake() => controls = new InputController();
+    private void Awake()
+    {
+        controls = new InputController();
+        controls.Player.SetCallbacks(this);
+    }
 
     private void OnEnable() => controls.Player.Enable();
     private void OnDisable() => controls.Player.Disable();
@@ -66,78 +70,62 @@ public class WeaponholderScript : NetworkBehaviour
     }
 
 
-    void Update()
+    // Called when SynVar selectedWeaponNum is changed
+    private void OnChangeWeapon(int selectedWeaponNum)
     {
         if (EnableManualSwitching)
         {
             // every weaponholder--------------------------------------------------------------------------------------------
             // is weapon changed, change the wepon in hand
-            if (selectedWeaponNum != selectedWeaponPrevious)
-            {
-                SelectWeapon(selectedWeaponNum);
-                selectedWeaponPrevious = selectedWeaponNum;
-            }
+            SelectWeapon(selectedWeaponNum);
+            selectedWeaponPrevious = selectedWeaponNum;
+        }
+    }
 
 
-
+    // Event from inputSystem. Called in Click, Hold and release of action
+    public void OnSwitchWeapons(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
             if (!isLocalPlayer) return;
             // only weaponholder----------------------------------------------------------------------------------------------
 
             int weaponNumber = selectedWeaponNum;
             float scrollwheelInput = controls.Player.SwitchWeapons.ReadValue<Vector2>().y;
 
-            if (scrollwheelInput > 0)
-            {
-                IncrementWeaponNumber(ref weaponNumber);
-            }
-            else if (scrollwheelInput < 0)
-            {
-                DecrementWeaponNumber(ref weaponNumber);
-            }
+            if (scrollwheelInput > 0) IncrementWeaponNumber(ref weaponNumber);
+            else if (scrollwheelInput < 0) DecrementWeaponNumber(ref weaponNumber);
+
 
 
             // if weapon changed Publish to server
             if (weaponNumber != selectedWeaponNum)
             {
-                selectedWeaponNum = weaponNumber;
+                //selectedWeaponNum = weaponNumber;
                 CmdSelectetWeapon(weaponNumber);
             }
         }
     }
 
-
     // increments the weaponnumber and check if the player has the weapon
     private void IncrementWeaponNumber(ref int weaponNumber)
     {
         //incrementWeaponNumber weapon in circle
-        weaponNumber++;
-        if (weaponNumber == Weaponholder.transform.childCount)
-        {
-            weaponNumber = 0;
-        }
+        if (++weaponNumber == Weapons.Length) { weaponNumber = 0; }
 
         //check if play has the weapon
-        if (!this.HasWeapon(weaponNumber))
-        {
-            IncrementWeaponNumber(ref weaponNumber);
-        }
+        if (!this.HasWeapon(weaponNumber)) { IncrementWeaponNumber(ref weaponNumber); }
     }
 
     // decrements the weaponnumber and check if the player has the weapon
     private void DecrementWeaponNumber(ref int weaponNumber)
     {
         //decrementWeaponNumber weapon in circle
-        weaponNumber--;
-        if (weaponNumber == -1)
-        {
-            weaponNumber = Weaponholder.transform.childCount - 1;
-        }
+        if (--weaponNumber < 0) { weaponNumber = Weapons.Length - 1; }
 
         //check if play has the weapon
-        if (!this.HasWeapon(weaponNumber))
-        {
-            DecrementWeaponNumber(ref weaponNumber);
-        }
+        if (!this.HasWeapon(weaponNumber)) { DecrementWeaponNumber(ref weaponNumber); }
     }
 
     // returns true if the player has the weapon with number
@@ -145,18 +133,8 @@ public class WeaponholderScript : NetworkBehaviour
     {
         GameObject weapon = Weapons[weaponNumber];
 
-        if (weapon.activeInHierarchy)
-        {
-            //Debug.Log("Has weapon");
-            return true;
-        }
-        else
-        {
-            //Debug.Log("Has not weapon");
-            return false;
-        }
-
-        throw new System.ArgumentException("Some Error in Weaponswitching occours!!", "Weapon");
+        if (weapon.activeInHierarchy) { return true; }
+        else { return false; }
     }
 
     // return true if successfull, flase if playser hasnt weapon.
@@ -164,19 +142,15 @@ public class WeaponholderScript : NetworkBehaviour
     {
         if (!HasWeapon(weaponNumber)) return false;
 
-        int count = 0;
-
-        foreach (GameObject weapon in Weapons)
+        for (int count = 0; count < Weapons.Length; count++)
         {
-            if (count++ == weaponNumber)
+            GameObject weapon = Weapons[count];
+            if (count == weaponNumber)
             {
                 weapon.GetComponent<WeaponData>().Weapon.SetActive(true);
                 SelectedWeapon = weapon;
             }
-            else
-            {
-                weapon.GetComponent<WeaponData>().Weapon.SetActive(false);
-            }
+            else { weapon.GetComponent<WeaponData>().Weapon.SetActive(false); }
         }
         return true;
     }
@@ -230,4 +204,29 @@ public class WeaponholderScript : NetworkBehaviour
         NetworkServer.Destroy(obj);
     }
 
+
+
+
+
+
+
+    #region Unused InputSystemCallbacks in this File
+
+    public void OnJump(InputAction.CallbackContext context) { }
+
+    public void OnMovement(InputAction.CallbackContext context) { }
+
+    public void OnRun(InputAction.CallbackContext context) { }
+
+    public void OnLook(InputAction.CallbackContext context) { }
+
+    public void OnShoot(InputAction.CallbackContext context) { }
+
+    public void OnScope(InputAction.CallbackContext context) { }
+
+    public void OnReload(InputAction.CallbackContext context) { }
+
+    public void OnInteract(InputAction.CallbackContext context) { }
+
+    #endregion
 }

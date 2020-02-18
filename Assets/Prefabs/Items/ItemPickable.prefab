@@ -140,4 +140,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  weaponType: 3
+  weaponType: 1
+  destroyOnUse: 1

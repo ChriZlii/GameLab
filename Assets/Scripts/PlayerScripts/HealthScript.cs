@@ -1,4 +1,5 @@
 ﻿using Mirror;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ public class HealthScript : NetworkBehaviour
         {
             Rpc_HIT((uint)data[0], (float)data[1]);
         }
-        else throw new UnityException("Call from Client, only enabled for Server/Host"); 
+        else throw new Exception("Call from Client, only enabled for Server/Host"); 
     }
 
 

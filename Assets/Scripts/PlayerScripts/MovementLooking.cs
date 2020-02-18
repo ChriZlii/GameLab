@@ -1,10 +1,9 @@
 ﻿using Mirror;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static InputController;
 
-public class MovementLooking : NetworkBehaviour
+public class MovementLooking : NetworkBehaviour, IPlayerActions
 {
     // Public editable Variables
     public GameObject head;
@@ -19,55 +18,33 @@ public class MovementLooking : NetworkBehaviour
 
 
     // Private Variables
-    private InputController controls = null;
+    private InputController inputControls = null;
     private float xRotation = 0;
     private bool isGrounded = false;
-    public  Vector3 velocity;
+    public Vector3 velocity;
 
 
 
 
     private void Awake()
     {
-        controls = new InputController();
+        inputControls = new InputController();
+        inputControls.Player.SetCallbacks(this);
         //Cursor.lockState = CursorLockMode.Locked;
         velocity = Vector3.zero;
     }
 
 
-    private void OnEnable() => controls.Player.Enable();
-    private void OnDisable() => controls.Player.Disable();
-    
+    private void OnEnable() => inputControls.Player.Enable();
+    private void OnDisable() => inputControls.Player.Disable();
+
 
     private void Update()
     {
-        // movement for local player
-        if (!isLocalPlayer) return;
-
-        Gravity();
-        Move();
-        Look();
-    }
-
-    private void Look()
-    {
-        //Body Rotation LEFT/RIGHT
-        Vector2 deltaMouse = controls.Player.Look.ReadValue<Vector2>() * MouseSensitivity * Time.deltaTime;
-        transform.Rotate(Vector3.up * deltaMouse.x);
-
-        // Camera Rotation UP/DOWN
-        this.xRotation -= deltaMouse.y;
-        this.xRotation = Mathf.Clamp(this.xRotation, -40f, 70f);
-        head.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-    }
-
-    public void Jump()
-    {
-        if (!isLocalPlayer) return;
-
-        if (isGrounded)
+        if (isLocalPlayer)
         {
-            velocity.y += Mathf.Sqrt(jumpHeight * Physics.gravity.y * -1f);
+            Gravity();
+            Move();
         }
     }
 
@@ -82,21 +59,84 @@ public class MovementLooking : NetworkBehaviour
         }
     }
 
+
+
     private void Move()
     {
         if (isGrounded)
         {
-            Vector2 movementInput = controls.Player.Movement.ReadValue<Vector2>();
-            float movementRun = controls.Player.Run.ReadValue<float>();
+            Vector2 movementInput = inputControls.Player.Movement.ReadValue<Vector2>();
+            float movementRun = inputControls.Player.Run.ReadValue<float>();
 
             Vector3 movement = (transform.right * movementInput.x + transform.forward * movementInput.y).normalized * movementSpeed * (1 + movementRun * 1.0f);
             velocity.x = movement.x;
             velocity.z = movement.z;
         }
-
         controller.Move(velocity * Time.deltaTime);
     }
 
 
-    
+
+
+    // InputSystem Event
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (isLocalPlayer)
+        {
+            if (context.phase == InputActionPhase.Started)
+            {
+                if (isGrounded)
+                {
+                    velocity.y += Mathf.Sqrt(jumpHeight * Physics.gravity.y * -1f);
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+    // InputSystem Event
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        if (isLocalPlayer)
+        {
+            if (context.phase == InputActionPhase.Performed)
+            {
+                //Body Rotation LEFT/RIGHT
+                Vector2 deltaMouse = inputControls.Player.Look.ReadValue<Vector2>() * MouseSensitivity * Time.deltaTime;
+                transform.Rotate(Vector3.up * deltaMouse.x);
+
+                // Camera Rotation UP/DOWN
+                this.xRotation -= deltaMouse.y;
+                this.xRotation = Mathf.Clamp(this.xRotation, -40f, 70f);
+                head.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+            }
+        }
+    }
+
+
+
+
+
+
+    #region Unused InputSystemCallbacks in this File
+    // InputSystem Event
+    public void OnMovement(InputAction.CallbackContext context) { }
+
+    public void OnRun(InputAction.CallbackContext context) { }
+
+    public void OnShoot(InputAction.CallbackContext context) { }
+
+    public void OnScope(InputAction.CallbackContext context) { }
+
+    public void OnSwitchWeapons(InputAction.CallbackContext context) { }
+
+    public void OnReload(InputAction.CallbackContext context) { }
+
+    public void OnInteract(InputAction.CallbackContext context) { }
+
+    #endregion
 }

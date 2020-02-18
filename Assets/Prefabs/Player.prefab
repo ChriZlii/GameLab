@@ -65,18 +65,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8175231512960313590}
-        m_MethodName: Jump
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 21135721-f3f4-4f10-989c-7ccf78e7f8d7
     m_ActionName: Player/Jump
   - m_PersistentCalls:
@@ -228,13 +217,14 @@ MonoBehaviour:
   syncInterval: 0.1
   Weaponholder: {fileID: 5861993011139049983}
   EnableManualSwitching: 1
-  SelectedWeapon: {fileID: 0}
-  selectedWeaponNum: 0
+  StartWeaponType: 0
   Weapons:
   - {fileID: 1596435906035245366, guid: 15d9beb2a55a8d441b044ae5e29d1714, type: 3}
   - {fileID: 3159223502739094232, guid: c6994f74e6f1ec949a3e1699cf2e5cdc, type: 3}
   - {fileID: 3217740738752093519, guid: e443491f51467dd42bf24f210d3843de, type: 3}
   - {fileID: 4621255831406206042, guid: c414358b4a53fd14eaa57ffcaea0b554, type: 3}
+  SelectedWeapon: {fileID: 0}
+  selectedWeaponNum: 0
 --- !u!114 &4753868141827027634
 MonoBehaviour:
   m_ObjectHideFlags: 0
