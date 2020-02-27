@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class NetworkManagers : NetworkManager
+public class NetworkManagerExt : NetworkManager
 {
     // Wrapper klasse für den vorhandenen Networkmanager.
     // Wird irgendwann zum eigenen Networkmanager erweitert!!!
