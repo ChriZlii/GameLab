@@ -71,7 +71,7 @@ public class WeaponholderScript : NetworkBehaviour, IPlayerActions
 
 
     // Called when SynVar selectedWeaponNum is changed
-    private void OnChangeWeapon(int selectedWeaponNum)
+    private void OnChangeWeapon(int PrevoisSelectedWeaponNum, int selectedWeaponNum)
     {
         if (EnableManualSwitching)
         {
