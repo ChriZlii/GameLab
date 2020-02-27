@@ -15,7 +15,8 @@ namespace Mirror.Examples.NetworkRoom
         /// <returns>true unless some code in here decides it needs to abort the replacement</returns>
         public override bool OnRoomServerSceneLoadedForPlayer(GameObject roomPlayer, GameObject gamePlayer)
         {
-            NetworkServer.Destroy(roomPlayer);
+            //NetworkServer.Destroy(roomPlayer);
+            roomPlayer.SetActive(false);
             return true;
         }
 
