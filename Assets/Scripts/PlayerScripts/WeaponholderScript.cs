@@ -58,6 +58,14 @@ public class WeaponholderScript : NetworkBehaviour, IPlayerActions
         {
             foreach (GameObject weapon in Weapons)
             {
+                // changed layer from Weapon
+                weapon.layer = LayerMask.NameToLayer("Weapon");
+                foreach (Transform weaponComponents in weapon.transform)
+                {
+                    weaponComponents.gameObject.layer = LayerMask.NameToLayer("Weapon");
+                    foreach (Transform weaponParts in weaponComponents.transform) { weaponParts.gameObject.layer = LayerMask.NameToLayer("Weapon"); }
+                }
+
                 WeaponTypes type = weapon.GetComponent<WeaponData>().weaponType;
                 GiveWeapon((int)type, false);
             }
