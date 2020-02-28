@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
+    //[SerializeField]
+    public GameObject[] CameraDeaktivationList;
 
     public void Start()
     {
@@ -22,20 +24,26 @@ public class CameraScript : MonoBehaviour
 
     private void UpdateCamera()
     {
-        if (!this.transform.parent.transform.parent.GetComponent<MovementLooking>().isLocalPlayer)
+        foreach (GameObject cam in CameraDeaktivationList)
         {
-            //gameObject.SetActive(false);
-
-            gameObject.GetComponent<Camera>().enabled = false;
-            gameObject.GetComponent<AudioListener>().enabled = false;
-        }
-        else
-        {
-            gameObject.GetComponent<Camera>().enabled = true;
-            gameObject.GetComponent<AudioListener>().enabled = true;
+            SetupCam(cam);
         }
     }
 
+    private void SetupCam(GameObject CameraObject)
+    {
+        Camera cam = CameraObject.GetComponent<Camera>();
+        AudioListener audio = CameraObject.GetComponent<AudioListener>();
 
-
+        if (!this.transform.parent.transform.parent.GetComponent<MovementLooking>().isLocalPlayer)
+        {
+            if (cam != null) cam.enabled = false;
+            if (audio != null) audio.enabled = false;
+        }
+        else
+        {
+            if (cam != null) cam.enabled = true;
+            if (audio != null) audio.enabled = true;
+        }
+    }
 }
