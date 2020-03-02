@@ -39,7 +39,7 @@ public class MovementLooking : NetworkBehaviour, IPlayerActions
     private void OnDisable() => inputControls.Player.Disable();
 
 
-    private void Update()
+    private void LateUpdate()
     {
         if (isLocalPlayer)
         {

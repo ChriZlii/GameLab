@@ -79,7 +79,8 @@ public class WeaponholderScript : NetworkBehaviour, IPlayerActions
 
 
     // Called when SynVar selectedWeaponNum is changed
-    private void OnChangeWeapon(int PrevoisSelectedWeaponNum, int selectedWeaponNum)
+    private void OnChangeWeapon(int PrevoisSelectedWeaponNum, int selectedWeaponNum) // new mirror
+    //    private void OnChangeWeapon(int selectedWeaponNum) // old mirror
     {
         if (EnableManualSwitching)
         {

@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33d4e760fca93b84db188e191c2838d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CameraDeaktivationList: []
 --- !u!1 &2599608262766212041
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,9 +413,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneId: 0
   serverOnly: 0
   m_AssetId: 
-  m_SceneId: 0
 --- !u!114 &1883502272787278473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +430,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  clientAuthority: 1
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
   compressRotation: 1
 --- !u!114 &5946590942251182316
 MonoBehaviour:
@@ -444,6 +449,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  clientAuthority: 1
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
   compressRotation: 1
   target: {fileID: 4207505156903914562}
 --- !u!114 &305703659768799936
