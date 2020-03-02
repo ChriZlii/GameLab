@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-
 public class CameraScript : MonoBehaviour
 {
     //[SerializeField]
@@ -45,5 +44,6 @@ public class CameraScript : MonoBehaviour
             if (cam != null) cam.enabled = true;
             if (audio != null) audio.enabled = true;
         }
+
     }
 }

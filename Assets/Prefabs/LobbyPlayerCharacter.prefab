@@ -96,7 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33d4e760fca93b84db188e191c2838d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraDeaktivationList: []
+  CameraDeaktivationList:
+  - {fileID: 1136763246155536982}
 --- !u!1 &2599608262766212041
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,6 +331,9 @@ MonoBehaviour:
   m_DeviceRegainedEvent:
     m_PersistentCalls:
       m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls: []
@@ -382,7 +386,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 1982697247869205023}
+  m_Camera: {fileID: 0}
 --- !u!143 &646504011764972688
 CharacterController:
   m_ObjectHideFlags: 0
