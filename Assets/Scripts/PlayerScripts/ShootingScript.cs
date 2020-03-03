@@ -43,7 +43,7 @@ public class ShootingScript : NetworkBehaviour
             gunData.NextTimeToFire = Time.time + 1f / gunData.FireRate;
 
             //shoot
-            Shoot(gunData);
+            TryShoot(gunData);
         }
 
 
@@ -55,7 +55,7 @@ public class ShootingScript : NetworkBehaviour
     }
 
 
-    private void Shoot(WeaponData gunData)
+    private void TryShoot(WeaponData gunData)
     {
 
         if (gunData.AmmoLoaded > 0)
@@ -65,6 +65,7 @@ public class ShootingScript : NetworkBehaviour
             //MuzzleFlash
 
             ShootRayCast();
+            CmdShoot();
             gunData.AmmoLoaded--;
         }
         else
@@ -141,6 +142,28 @@ public class ShootingScript : NetworkBehaviour
         }
     }
 
+
+
+    [Command]
+    public void CmdShoot() => RpcShoot();
+    [ClientRpc]
+    public void RpcShoot()
+    {
+        // do everithing what schoult happens on shoot
+        GameObject SelectedWeapon = weaponholder.SelectedWeapon;
+        WeaponData gundata = SelectedWeapon.GetComponent<WeaponData>();
+
+        ParticleSystem flash = Instantiate(gundata.MuzzleParticles, gundata.WeaponMuzzle.transform.position, gundata.WeaponMuzzle.transform.rotation, gundata.WeaponMuzzle.transform);
+        if (isLocalPlayer)
+        {
+            LayerMask layer = LayerMask.NameToLayer("Weapon");
+            flash.gameObject.layer = layer;
+            foreach (Transform t1 in flash.transform) { t1.gameObject.layer = layer; }
+        }
+        flash.Play();
+
+        Destroy(flash, 0.1f);
+    }
 
 
 

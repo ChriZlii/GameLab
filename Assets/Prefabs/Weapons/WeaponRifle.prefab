@@ -284,7 +284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9006911463162855435
 Transform:
   m_ObjectHideFlags: 0
@@ -354,7 +354,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Weapon: {fileID: 4763259922795571094}
   WeaponMuzzle: {fileID: 2006341872147427087}
-  MuzzleParticles: {fileID: 0}
+  MuzzleParticles: {fileID: 5526039559818388550, guid: 1c8045027025cb446ad0cf0e290266ee,
+    type: 3}
   BulletImpact: {fileID: 2485986588240205421, guid: b1e1fe2ad30021141b4ff3d7ec27aebc,
     type: 3}
   weaponType: 1
@@ -459,7 +460,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &809553157998483636
 Transform:
   m_ObjectHideFlags: 0

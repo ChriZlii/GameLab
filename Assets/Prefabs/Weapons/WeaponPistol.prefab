@@ -203,7 +203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Weapon: {fileID: 1149440765377429022}
   WeaponMuzzle: {fileID: 6610567484960988316}
-  MuzzleParticles: {fileID: 0}
+  MuzzleParticles: {fileID: 5526039559818388550, guid: 1c8045027025cb446ad0cf0e290266ee,
+    type: 3}
   BulletImpact: {fileID: 2485986588240205421, guid: b1e1fe2ad30021141b4ff3d7ec27aebc,
     type: 3}
   weaponType: 0

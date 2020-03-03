@@ -5,6 +5,12 @@ using UnityEngine;
 public class NetworkRoomManagerExt : NetworkRoomManager
 {
 
+    public override void Start()
+    {
+        base.Start();
+        Application.targetFrameRate = 45; //For a target fps of 45.
+    }
+
 
     // for itemManagere
     public override void OnRoomServerSceneChanged(string sceneName)
