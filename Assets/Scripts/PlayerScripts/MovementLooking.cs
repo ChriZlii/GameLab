@@ -12,8 +12,9 @@ public class MovementLooking : NetworkBehaviour, IPlayerActions
 
     // Private editable Variables
     [SerializeField] float MouseSensitivity = 100f;
-    [SerializeField] float movementSpeed = 5f;
-    [SerializeField] float jumpHeight = 1f;
+    [SerializeField] float movementSpeed = 5f;      // m/s
+    [SerializeField] float runningSpeed = 15f;      // m/s
+    [SerializeField] float jumpHeight = 1f;         // m
     [SerializeField] float GravityMulti = 1f;
 
 
@@ -66,9 +67,17 @@ public class MovementLooking : NetworkBehaviour, IPlayerActions
         if (isGrounded)
         {
             Vector2 movementInput = inputControls.Player.Movement.ReadValue<Vector2>();
-            float movementRun = inputControls.Player.Run.ReadValue<float>();
 
-            Vector3 movement = (transform.right * movementInput.x + transform.forward * movementInput.y).normalized * movementSpeed * (1 + movementRun * 1.0f);
+            Vector3 movement;
+            if (inputControls.Player.Run.ReadValue<float>() == 0) // normal walk
+            {
+                movement = (transform.right * movementInput.x + transform.forward * movementInput.y).normalized * movementSpeed;
+            }
+            else // running
+            {
+                movement = (transform.right * movementInput.x + transform.forward * movementInput.y).normalized * runningSpeed;
+            }
+            
             velocity.x = movement.x;
             velocity.z = movement.z;
         }
