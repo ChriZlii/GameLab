@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -1136500299576141655}
   - component: {fileID: 1160086812512317619}
   m_Layer: 2
-  m_Name: ItemPickable
+  m_Name: ItemPickableWeaponDirect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

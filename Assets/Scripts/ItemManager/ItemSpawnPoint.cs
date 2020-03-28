@@ -1,8 +1,6 @@
 ﻿using Mirror;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 
@@ -15,7 +13,7 @@ public class ItemSpawnPoint : NetworkBehaviour
     public struct ItemSpawnData
     {
         public GameObject Item;
-        [Range (0f,1f)]
+        [Range(0f, 1f)]
         public float SpawnProbability;
     }
 
@@ -24,7 +22,7 @@ public class ItemSpawnPoint : NetworkBehaviour
     //Public--------------------------------------------------------------------------
     [HideInInspector]
     public GameObject Item;
-    
+
 
     public List<ItemSpawnData> SpawnableItems;
 
@@ -36,12 +34,18 @@ public class ItemSpawnPoint : NetworkBehaviour
 
     public void Awake()
     {
-        ItemManager.RegisterStartPosition(this);
+        if (SpawnableItems.Count > 0)
+        {
+            ItemManager.RegisterStartPosition(this);
+        }
     }
 
     public void OnDestroy()
     {
-        ItemManager.UnRegisterStartPosition(this);
+        if (SpawnableItems.Count > 0)
+        {
+            ItemManager.UnRegisterStartPosition(this);
+        }
     }
 
 
@@ -53,6 +57,10 @@ public class ItemSpawnPoint : NetworkBehaviour
 
     public GameObject SpawnRandomItem()
     {
+        if (SpawnableItems.Count <= 0)
+        {
+            return null;
+        }
 
         float random = UnityEngine.Random.value;
 
@@ -66,7 +74,7 @@ public class ItemSpawnPoint : NetworkBehaviour
             if (random <= 0)
             {
                 //NetworkServer.Destroy(Item);
-                Item = Instantiate(original:data.Item, position:transform.position, rotation:transform.rotation);
+                Item = Instantiate(original: data.Item, position: transform.position, rotation: transform.rotation);
                 NetworkServer.Spawn(Item);
                 return Item;
             }
@@ -77,6 +85,11 @@ public class ItemSpawnPoint : NetworkBehaviour
 
     public GameObject SpawnItem(int ID)
     {
+        if (SpawnableItems.Count <= 0)
+        {
+            return null;
+        }
+
         if (!isServer) return null; // only server permitts this action
 
         // Destroy old gameobject 
@@ -90,7 +103,7 @@ public class ItemSpawnPoint : NetworkBehaviour
         }
         catch (ArgumentOutOfRangeException) { }
 
-        
+
         return Item;
     }
 
