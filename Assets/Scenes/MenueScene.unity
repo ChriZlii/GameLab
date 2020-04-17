@@ -307,16 +307,21 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 2485986588240205421, guid: b1e1fe2ad30021141b4ff3d7ec27aebc, type: 3}
-  - {fileID: 3535800284688102440, guid: 7f782938596f43c4abb3d99af93be24a, type: 3}
   - {fileID: 6181888441347688048, guid: e4034a251882c26448cd0a2ab501117b, type: 3}
-  - {fileID: 3309281120760925261, guid: 7521d54f1fc6658469cbcd6b53543eb9, type: 3}
-  - {fileID: 0}
+  - {fileID: 1652911848763084304, guid: c811ab543c6264f43a634012977a3223, type: 3}
+  - {fileID: 7730069607947624918, guid: bb69e7735ec5881489253db73e998608, type: 3}
+  - {fileID: 207724264591558598, guid: 9317f04fb12714b4197cf325e384c3e7, type: 3}
+  - {fileID: 8503112629141073275, guid: 4919998273e8bc74193823c734e2c7de, type: 3}
+  - {fileID: 9058146136319527932, guid: 90156390990d64042a6a545546af0514, type: 3}
+  - {fileID: 3228095200909767413, guid: 1957532e14f021442bb0b2141dbbef37, type: 3}
+  - {fileID: 2597178738096249150, guid: e01299ac1568758439c1497ebf353674, type: 3}
+  - {fileID: 6670661202445423944, guid: 7e44a459a1b0f20479ed6382f3e2e229, type: 3}
   showRoomGUI: 1
   minPlayers: 1
   roomPlayerPrefab: {fileID: 3786007960379017188, guid: f52ada21198701c429c2d1efee8d691d,
     type: 3}
   RoomScene: LobbyScene
-  GameplayScene: GameScene
+  GameplayScene: TestMapScene
   roomSlots: []
   allPlayersReady: 0
 --- !u!4 &1299172033
