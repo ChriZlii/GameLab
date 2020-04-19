@@ -16,7 +16,7 @@ public class NetworkRoomManagerExt : NetworkRoomManager
     public override void OnRoomServerSceneChanged(string sceneName)
     {
 
-        if (sceneName.StartsWith("GameScene"))
+        if (sceneName.StartsWith(GameplayScene))
         {
             //Find all ItemManager
             ItemManager[] itemManager = Resources.FindObjectsOfTypeAll<ItemManager>();
