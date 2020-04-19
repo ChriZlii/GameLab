@@ -31,7 +31,6 @@ public class MovementLooking : NetworkBehaviour, IPlayerActions
     {
         inputControls = new InputController();
         inputControls.Player.SetCallbacks(this);
-        //Cursor.lockState = CursorLockMode.Locked;
         velocity = Vector3.zero;
     }
 

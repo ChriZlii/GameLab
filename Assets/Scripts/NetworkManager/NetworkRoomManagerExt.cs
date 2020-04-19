@@ -31,6 +31,13 @@ public class NetworkRoomManagerExt : NetworkRoomManager
                     itemManager[i].gameObject.SetActive(false);
                 }
             }
+
+            // lock the mouse when game is starting
+            //Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 
