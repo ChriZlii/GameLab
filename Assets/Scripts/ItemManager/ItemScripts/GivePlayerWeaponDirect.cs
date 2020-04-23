@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class GivePlayerWeaponDirect : NetworkBehaviour
+[RequireComponent(typeof(NetworkIdentity))]
+public class GivePlayerWeaponDirect : ItemBehaviour
 {
     //Public-----------------------------------------------------------------------------------
 
     public WeaponTypes weaponType;
-    public bool destroyOnUse = true;
 
     //Private----------------------------------------------------------------------------------
 

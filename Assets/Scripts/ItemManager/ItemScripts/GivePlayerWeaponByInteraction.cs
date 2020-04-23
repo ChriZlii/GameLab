@@ -4,13 +4,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static InputController;
 
-[RequireComponent(typeof(NetworkIdentity))]
-public class GivePlayerWeaponByInteraction : NetworkBehaviour, IPlayerActions
+public class GivePlayerWeaponByInteraction : ItemBehaviour, IPlayerActions
 {
     //Public-----------------------------------------------------------------------------------
 
     public WeaponTypes weaponType;
-    public bool destroyOnUse = true;
 
     //Private----------------------------------------------------------------------------------
     private InputController inputControls;
