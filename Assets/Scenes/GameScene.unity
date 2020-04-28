@@ -167,13 +167,14 @@ PrefabInstance:
     - target: {fileID: 2784441723357076222, guid: a68272fa6e99a8042ae6f883dd01a55a,
         type: 3}
       propertyPath: SpawnableItems.Array.data[0].SpawnProbability
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2784441723357076222, guid: a68272fa6e99a8042ae6f883dd01a55a,
         type: 3}
       propertyPath: SpawnableItems.Array.data[0].Item
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9058146136319527932, guid: 90156390990d64042a6a545546af0514,
+        type: 3}
     - target: {fileID: 2784441723357076223, guid: a68272fa6e99a8042ae6f883dd01a55a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -442,8 +443,9 @@ Transform:
   - {fileID: 1677901983}
   - {fileID: 1883343215}
   - {fileID: 48117956}
+  - {fileID: 705507995}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &680462450
 GameObject:
@@ -625,10 +627,10 @@ Transform:
   m_GameObject: {fileID: 705507993}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.15919976, z: 0.21192801}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 642051032}
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &862329143
 GameObject:
@@ -648,7 +650,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &862329144
 Transform:
   m_ObjectHideFlags: 0
@@ -736,7 +738,7 @@ MonoBehaviour:
   serverTickRate: 30
   showDebugMessages: 0
   offlineScene: 
-  onlineScene: 
+  onlineScene: GameScene
   transport: {fileID: 862329146}
   networkAddress: localhost
   maxConnections: 4
@@ -746,10 +748,10 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
-  - {fileID: 2485986588240205421, guid: b1e1fe2ad30021141b4ff3d7ec27aebc, type: 3}
-  - {fileID: 3535800284688102440, guid: 7f782938596f43c4abb3d99af93be24a, type: 3}
-  - {fileID: 6181888441347688048, guid: e4034a251882c26448cd0a2ab501117b, type: 3}
-  - {fileID: 3309281120760925261, guid: 7521d54f1fc6658469cbcd6b53543eb9, type: 3}
+  - {fileID: 9058146136319527932, guid: 90156390990d64042a6a545546af0514, type: 3}
+  - {fileID: 3228095200909767413, guid: 1957532e14f021442bb0b2141dbbef37, type: 3}
+  - {fileID: 2597178738096249150, guid: e01299ac1568758439c1497ebf353674, type: 3}
+  - {fileID: 6670661202445423944, guid: 7e44a459a1b0f20479ed6382f3e2e229, type: 3}
 --- !u!1 &1116320584
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,7 +853,7 @@ PrefabInstance:
         type: 3}
       propertyPath: SpawnableItems.Array.data[0].Item
       value: 
-      objectReference: {fileID: 3309281120760925261, guid: 7521d54f1fc6658469cbcd6b53543eb9,
+      objectReference: {fileID: 2597178738096249150, guid: e01299ac1568758439c1497ebf353674,
         type: 3}
     - target: {fileID: 2784441723357076223, guid: a68272fa6e99a8042ae6f883dd01a55a,
         type: 3}
@@ -1109,7 +1111,7 @@ PrefabInstance:
         type: 3}
       propertyPath: SpawnableItems.Array.data[0].Item
       value: 
-      objectReference: {fileID: 3309281120760925261, guid: 9459815442938724bb3a8b2fe2faca00,
+      objectReference: {fileID: 3228095200909767413, guid: 1957532e14f021442bb0b2141dbbef37,
         type: 3}
     - target: {fileID: 2784441723357076222, guid: a68272fa6e99a8042ae6f883dd01a55a,
         type: 3}
@@ -1416,6 +1418,12 @@ PrefabInstance:
       propertyPath: SpawnableItems.Array.data[0].SpawnProbability
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2784441723357076222, guid: a68272fa6e99a8042ae6f883dd01a55a,
+        type: 3}
+      propertyPath: SpawnableItems.Array.data[0].Item
+      value: 
+      objectReference: {fileID: 6670661202445423944, guid: 7e44a459a1b0f20479ed6382f3e2e229,
+        type: 3}
     - target: {fileID: 2784441723357076223, guid: a68272fa6e99a8042ae6f883dd01a55a,
         type: 3}
       propertyPath: m_LocalPosition.x

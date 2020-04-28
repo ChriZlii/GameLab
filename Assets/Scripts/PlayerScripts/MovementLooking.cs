@@ -8,12 +8,13 @@ public class MovementLooking : NetworkBehaviour, IPlayerActions
     // Public editable Variables
     public GameObject head;
     public CharacterController controller;
+    public HumanoidAnimationCntrlScript humanoidControl;
 
 
     // Private editable Variables
     [SerializeField] float MouseSensitivity = 100f;
-    [SerializeField] float movementSpeed = 5f;      // m/s
-    [SerializeField] float runningSpeed = 15f;      // m/s
+    [SerializeField] float movementSpeed = 1f;      // m/s
+    [SerializeField] float runningSpeed = 3f;      // m/s
     [SerializeField] float jumpHeight = 1f;         // m
     [SerializeField] float GravityMulti = 1f;
 
@@ -71,10 +72,14 @@ public class MovementLooking : NetworkBehaviour, IPlayerActions
             if (inputControls.Player.Run.ReadValue<float>() == 0) // normal walk
             {
                 movement = (transform.right * movementInput.x + transform.forward * movementInput.y).normalized * movementSpeed;
+                humanoidControl.MoveBodyForward(movementInput.y*5);
+                humanoidControl.MoveBodySideward(movementInput.x * 5);
             }
             else // running
             {
                 movement = (transform.right * movementInput.x + transform.forward * movementInput.y).normalized * runningSpeed;
+                humanoidControl.MoveBodyForward(movementInput.y * 10);
+                humanoidControl.MoveBodySideward(movementInput.x * 5);
             }
             
             velocity.x = movement.x;
