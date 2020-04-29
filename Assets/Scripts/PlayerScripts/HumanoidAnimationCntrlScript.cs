@@ -10,12 +10,14 @@ public class HumanoidAnimationCntrlScript : MonoBehaviour
     // Public fields
     public bool EnableHeadIK = false;
     public bool EnableHandIK = false;
-    public Transform rightHandle = null;
-    public Transform leftHandle = null;
-    public Transform lookObj = null;
+    
 
     // Privat fileds
     private Animator animator;
+
+    private Transform IKrightHandle = null;
+    private Transform IKleftHandle = null;
+    private Transform IKlookObj = null;
 
     // Public fields
     public enum WalkTypes
@@ -39,8 +41,6 @@ public class HumanoidAnimationCntrlScript : MonoBehaviour
 
     public void MoveBodyForward(float speed)
     {
-        Debug.Log("anim " + speed);
-
         if (!animator) return;
         
         if (speed < -5) speed = -5;
@@ -83,6 +83,22 @@ public class HumanoidAnimationCntrlScript : MonoBehaviour
         transform.Rotate(Vector3.up * degree);
     }
 
+
+    // IK stuff________________________________________
+
+    public void setHandIKTargets(Transform rightHandle, Transform leftHandle)
+    {
+        this.IKleftHandle = leftHandle;
+        this.IKrightHandle = rightHandle;
+    }
+
+    public void setHeadIKLockAtTarget(Transform target)
+    {
+        this.IKlookObj = target;
+    }
+
+
+
     //a callback for calculating IK
     void OnAnimatorIK()
     {
@@ -92,10 +108,10 @@ public class HumanoidAnimationCntrlScript : MonoBehaviour
             if (EnableHeadIK)
             {
                 // Set the look target position, if one has been assigned
-                if (lookObj != null)
+                if (IKlookObj != null)
                 {
                     animator.SetLookAtWeight(1);
-                    animator.SetLookAtPosition(lookObj.position);
+                    animator.SetLookAtPosition(IKlookObj.position);
                 }
             }
             else
@@ -107,21 +123,21 @@ public class HumanoidAnimationCntrlScript : MonoBehaviour
             if (EnableHandIK)
             {
                 // Set the right hand target position and rotation, if one has been assigned
-                if (rightHandle != null)
+                if (IKrightHandle != null)
                 {
                     animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
                     animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
-                    animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandle.position);
-                    animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandle.rotation);
+                    animator.SetIKPosition(AvatarIKGoal.RightHand, IKrightHandle.position);
+                    animator.SetIKRotation(AvatarIKGoal.RightHand, IKrightHandle.rotation);
                 }
 
                 // Set the right hand target position and rotation, if one has been assigned
-                if (leftHandle != null)
+                if (IKleftHandle != null)
                 {
                     animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
                     animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
-                    animator.SetIKPosition(AvatarIKGoal.LeftHand, leftHandle.position);
-                    animator.SetIKRotation(AvatarIKGoal.LeftHand, leftHandle.rotation);
+                    animator.SetIKPosition(AvatarIKGoal.LeftHand, IKleftHandle.position);
+                    animator.SetIKRotation(AvatarIKGoal.LeftHand, IKleftHandle.rotation);
                 }
 
             }

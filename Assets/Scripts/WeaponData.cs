@@ -11,6 +11,10 @@ public class WeaponData : MonoBehaviour
     public GameObject BulletImpact;
 
     [Header("Weapon Data")]
+    public Transform RightHandGrip;
+    public Transform LeftHandGrip;
+
+    [Header("Weapon Data")]
     public WeaponTypes weaponType;
     public float ShootingDistance = 100f;
     public float Damage = 10f;

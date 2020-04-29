@@ -9,6 +9,8 @@ public class WeaponholderScript : NetworkBehaviour, IPlayerActions
 {
 
     // Publics------------------------------------------------------------------------------------------------------
+
+    public HumanoidAnimationCntrlScript humanoidControl;
     public GameObject Weaponholder;
 
     public bool EnableManualSwitching = true;
@@ -75,6 +77,11 @@ public class WeaponholderScript : NetworkBehaviour, IPlayerActions
         if (isServer) RpcGiveWeapon((int)StartWeaponType, true);
         else GiveWeapon((int)StartWeaponType, true);
         SelectWeapon((int)StartWeaponType);
+
+        // Set IK animation
+        WeaponData weaponData = SelectedWeapon.GetComponent<WeaponData>();
+        humanoidControl.setHandIKTargets(weaponData.RightHandGrip, weaponData.LeftHandGrip);
+        humanoidControl.EnableHandIK = true;
     }
 
 
@@ -88,6 +95,12 @@ public class WeaponholderScript : NetworkBehaviour, IPlayerActions
             // is weapon changed, change the wepon in hand
             SelectWeapon(selectedWeaponNum);
             selectedWeaponPrevious = selectedWeaponNum;
+
+
+            // Set IK animation
+            WeaponData weaponData = SelectedWeapon.GetComponent<WeaponData>();
+            humanoidControl.setHandIKTargets(weaponData.RightHandGrip, weaponData.LeftHandGrip);
+            humanoidControl.EnableHandIK = true;
         }
     }
 
